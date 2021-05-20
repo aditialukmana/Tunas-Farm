@@ -1,0 +1,75 @@
+/* common  */
+.is-disabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.red {
+  color:red
+}
+
+/* dropdown select */
+.custom-select {
+  font-size: 14px;
+}
+.custom-select:focus {
+  background-color: #fff;
+  color: black;
+}
+
+/* sidebar  */
+#main-menu li.active.open a.has-arrow {
+  color:#393d42
+}
+#main-menu li.active.open i {
+  color:#393d42;
+  background: transparent;
+}
+
+/* dashboard card menu  */
+.card .my_sort_cut {
+  padding: 30px 10px;
+}
+.card .my_sort_cut h3 {
+  font-size: 5em;
+}
+
+/* table  */
+.table th {
+  font-weight: bold !important;
+}
+
+/* signin */
+#forgot-password-section {
+  display: none;
+}
+
+/* modal list item  */
+.modal-body .list-group-item {
+  border: none;
+}
+
+.modal-body .release-section tr td {
+  border: 1px solid #333
+}
+
+.detail-section tr th {
+  background: #fddada !important
+}
+
+.detail-section tr td {
+  background: #eeeeee !important;
+}
+
+.modal-body .release-section .right-subcard {
+  border-left: transparent
+}
+.modal-body .release-section .left-subcard {
+  border-right: transparent
+}
+.modal-body .release-section .center-subcard {
+  border-left: transparent;
+  border-right: transparent;
+}
+
