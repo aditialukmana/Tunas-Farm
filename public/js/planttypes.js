@@ -17,7 +17,7 @@ $(document).ready(function () {
             data: "image",
             title: "Image",
             render: function (data) {
-              var url = "http://localhost/tunasfarm/public/img/";
+              var url = "http://localhost/tunasdash/public/uploads/";
               return '<img src="'+ url +''+ data +'" height="100px" width="100px">';
             },
           },

@@ -33,12 +33,19 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::user');
-$routes->get('/register', 'Home::register');
-$routes->get('/user', 'User::index');
-
-$routes->get('/admin','Admin::index',['filter'=>'role:admin']);
-$routes->get('/admin/index','Admin::index',['filter'=>'role:admin,super_admin']);
-$routes->get('/admin/(:num)','Admin::detail/$1',['filter'=>'role:admin,super_admin']);
+$routes->get('/register', 'auth::register');
+// $routes->get('/admin','Admin::index',['filter'=>'role:admin']);
+// $routes->get('/admin/index','Admin::index',['filter'=>'role:admin,super_admin']);
+// $routes->get('/admin/(:num)','Admin::detail/$1',['filter'=>'role:admin,super_admin']);
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+	$routes->resource('planttypes');
+	$routes->resource('customers');
+	$routes->resource('contracts');
+	$routes->resource('plantdatalogs');
+	$routes->resource('companies');
+	$routes->resource('sites');
+	$routes->resource('systemlogs');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

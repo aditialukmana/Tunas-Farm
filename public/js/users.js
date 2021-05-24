@@ -70,7 +70,7 @@ $(document).ready(function () {
       console.log(123);
       var id = $(this).data("id");
       $.ajax({
-        url: "http://localhost/tunasfarm/api/users/" + id,
+        url: "http://localhost/tunasdash/api/users/" + id,
         type: "get",
         async: true,
         dataType: "json",
@@ -111,7 +111,7 @@ $(document).ready(function () {
         };
   
         $.ajax({
-          url: "http://localhost/tunasfarm/api/users",
+          url: "http://localhost/tunasdash/api/users",
           type: "post",
           data: dataJson,
           dataType: "json",
@@ -131,10 +131,10 @@ $(document).ready(function () {
         var id = $(this).data("id");
         $("#update_User_form").attr(
           "action",
-          "http://localhost/tunasfarm/api/users/update/" + id
+          "http://localhost/tunasdash/api/users/update/" + id
         );
         $.ajax({
-          url: "http://localhost/tunasfarm/api/users/" + id,
+          url: "http://localhost/tunasdash/api/users/" + id,
           type: "get",
           async: true,
           dataType: "json",
@@ -167,7 +167,7 @@ $(document).ready(function () {
         var edit_id = $(this).data("id");
         $("#update_User_form").click("#butUpdate", function () {
           var settings = {
-            url: "http://localhost/tunasfarm/api/users/update/" + edit_id,
+            url: "http://localhost/tunasdash/api/users/update/" + edit_id,
             method: "POST",
             data: dataJson,
             dataType: "json"
@@ -196,7 +196,7 @@ $(document).ready(function () {
       }).then((result) => {
         if (result.isConfirmed) {
           $.ajax({
-            url: "http://localhost/tunasfarm/api/users/" + del_id,
+            url: "http://localhost/tunasdash/api/users/" + del_id,
             type: "DELETE",
             data: { id: del_id },
             async: true,

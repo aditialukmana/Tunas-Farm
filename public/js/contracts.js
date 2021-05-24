@@ -62,7 +62,7 @@ $(document).ready(function () {
         };
   
         $.ajax({
-          url: "http://localhost/tunasfarm/api/customers",
+          url: "http://localhost/tunasdash/api/customers",
           type: "post",
           data: dataJson,
           dataType: "json",

@@ -58,7 +58,7 @@ function tambahCompany() {
       };
 
       $.ajax({
-        url: "http://localhost/tunasfarm/api/companies",
+        url: "http://localhost/tunasdash/api/companies",
         type: "post",
         data: dataJson,
         dataType: "json",
@@ -75,7 +75,7 @@ $(document).ready(function () {
     e.preventDefault();
     var id = $(this).data("id");
     $.ajax({
-      url: "http://localhost/tunasfarm/api/companies/" + id,
+      url: "http://localhost/tunasdash/api/companies/" + id,
       type: "get",
       async: true,
       dataType: "json",
@@ -119,7 +119,7 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: "http://localhost/tunasfarm/api/customers/" + del_id,
+          url: "http://localhost/tunasdash/api/customers/" + del_id,
           type: "DELETE",
           data: { id: del_id },
           async: true,
