@@ -4,7 +4,7 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\ContractsModel;
+use CodeIgniter\HTTP\URI;
 
 class Contracts extends ResourceController
 {
@@ -17,13 +17,22 @@ class Contracts extends ResourceController
 	public function __construct()
 	{
 		$this->validation = \Config\Services::validation();
+		helper('system_log');
+		helper(['form', 'url']);
 	}
 
 	// get all product
 	public function index()
 	{
-		$data = $this->model->getData();
-		return $this->respond($data, 200);
+		$data = $this->model->joinData();
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -31,7 +40,14 @@ class Contracts extends ResourceController
 	{
 		$data = $this->model->getData($id);
 		if ($data) {
-			return $this->respond($data);
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get Single Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}
@@ -40,11 +56,36 @@ class Contracts extends ResourceController
 
 	public function create()
 	{
-		$data = $this->request->getPost();
-
+		$company = $this->request->getPost('company');
+		$site = $this->request->getPost('site');
+		$start = $this->request->getPost('start_period');
+		$end = $this->request->getPost('end_period');
+		$document = $this->request->getFile('contract_document');
+		$document_name = $document->getName();
+		$commitment = $this->request->getPost('contract_commitment');
+		$partnership = $this->request->getPost('partnership_objective');
+		$data = [
+			'company'				=> $company,
+			'site'					=> $site,
+			'start_period'			=> $start,
+			'end_period'			=> $end,
+			'contract_document'		=> $document_name,
+			'contract_commitment'	=> $commitment,
+			'partnership_objective'	=> $partnership,
+		];
 		if ($data) {
 			$this->model->save($data);
-			return redirect()->to(base_url('view/contracts'));
+			$document->move(ROOTPATH . 'public/documents/', $document_name);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Create Contract';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -54,17 +95,27 @@ class Contracts extends ResourceController
 	public function update($id = null)
 	{
 		$data = $this->request->getRawInput();
-		// $this->validation->run($data, 'customers_update');
-		// $errors = $this->validation->getErrors();
+		$this->validation->run($data, 'contracts_update');
+		$errors = $this->validation->getErrors();
 
-		// if ($errors) {
-		// 	log_message('error', implode(",", array_values($errors)));
-		// 	return $this->fail($errors);
-		// }
+		if ($errors) {
+			log_message('error', implode(",", array_values($errors)));
+			return $this->fail($errors);
+		}
 
 		if ($data) {
 			$this->model->update($id, $data);
-			return redirect()->to(base_url('view/contracts'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update Contract';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondUpdated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -76,7 +127,17 @@ class Contracts extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
-			return redirect()->to(base_url('view/contracts'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Delete Contract';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 200,
+				'error'    => null,
+				'messages' => [
+					'success' => 'Data Deleted'
+				]
+			];
+			return $this->respondDeleted($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}

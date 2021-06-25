@@ -1,53 +1,126 @@
+var urlPlantTypes = $("#tablePlantTypes").data("url");
+console.log(urlPlantTypes);
+var tablePlantTypes = null;
+var url = "http://localhost:8080/uploads/";
 $(document).ready(function () {
-  var urlPlantTypes = $("#tablePlantTypes").data("url");
-  $.ajax({
-    url: urlPlantTypes,
-    type: "get",
-    async: true,
-    dataType: "json",
-    success: function (data) {
-      var i = 1;
-      var tableUsers = $("#tablePlantTypes").DataTable({
-        data: data,
-        columns: [
-          { data: null, title: "No", width: "10%" },
-          { data: "code", title: "Plant ID" },
-          { data: "name", title: "Name" },
-          {
-            data: "image",
-            title: "Image",
-            render: function (data) {
-              var url = "http://localhost/tunasdash/public/uploads/";
-              return '<img src="'+ url +''+ data +'" height="100px" width="100px">';
-            },
+  tablePlantTypes = $("#tablePlantTypes").DataTable({
+    ajax: urlPlantTypes,
+    columns: [
+      { data: "code", title: "Plant ID" },
+      { data: "name", title: "Name" },
+      {
+        data: "image",
+        title: "Image",
+        render: function (data) {
+          return (
+            '<img src="' +
+            url +
+            data +
+            '" height="100px" width="100px" class="img-thumbnail">'
+          );
+        },
+      },
+      { data: "est_harvest_time", title: "Est Harvest Time" },
+      { data: "est_weight", title: "Est Weight" },
+      {
+        data: (items) => {
+          return (
+            '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-plant" title="Edit" data-id="' +
+            items.id +
+            '" data-toggle="modal" data-target="#modal_update_plant"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-plant" title="Delete" data-id="' +
+            items.id +
+            '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
+          );
+        },
+        title: "Action",
+      },
+    ],
+    order: [[1, "desc"]],
+  });
+
+  $("#add_plant").click(function () {
+    var formData = new FormData($("#create_PlantType_form")[0]);
+    $.ajax({
+      url: urlPlantTypes,
+      type: "POST",
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function (data) {
+        notifAddSuccess();
+        $("#modal_create_plant").modal("hide");
+        $("#create_PlantType_form")[0].reset();
+        tablePlantTypes.ajax.reload();
+      },
+    });
+  });
+
+  $(document).on("click", ".edit-plant", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $.ajax({
+      url: urlPlantTypes + "/" + id,
+      type: "GET",
+      async: true,
+      dataType: "json",
+      success: function (data) {
+        $("#edit_id").val(data.data.id);
+        $("#name_edit").val(data.data.name);
+        $("#harvest_edit").val(data.data.est_harvest_time);
+        $("#weight_edit").val(data.data.est_weight);
+      },
+    });
+  });
+
+  $("#edit_plant").click(function () {
+    var edit_id = $("#edit_id").val();
+    var dataJson = {
+      name: $("#name_edit").val(),
+      est_harvest_time: $("#harvest_edit").val(),
+      est_weight: $("#weight_edit").val(),
+    };
+    $.ajax({
+      url: urlPlantTypes + "/" + edit_id,
+      type: "PUT",
+      data: dataJson,
+      dataType: "json",
+      success: function (data) {
+        notifUpdateSuccess();
+        $("#modal_update_plant").modal("hide");
+        $("#update_PlantType_form")[0].reset();
+        tablePlantTypes.ajax.reload();
+      },
+    });
+  });
+
+  $(document).on("click", ".delete-plant", function (e) {
+    e.preventDefault();
+    var del_id = $(this).data("id");
+    Swal.fire({
+      title: "Apakah kamu yakin?",
+      text: "Data yang telah terhapus tidak bisa dikembalikan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, hapus!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: urlPlantTypes + "/" + del_id,
+          type: "DELETE",
+          data: { id: del_id },
+          async: true,
+          dataType: "json",
+          success: function (response) {
+            notifDeleteSuccess();
+            tablePlantTypes.ajax.reload();
           },
-          {
-            data: (items) => {
-              return (
-                '<a href="javascript:void(0);" class="btn btn-primary mb-2 detail-user" title="Details" data-id="' +
-                items.id +
-                '" data-toggle="modal" data-target="#detailModal"><span class="sr-only">Details</span> <i class="fa fa-info"></i></a> <a href="javascript:void(0);" onclick="return editUser();" class="btn btn-success mb-2" title="Edit" data-id="' +
-                items.id +
-                '" data-toggle="modal" data-target="#modal_update"><span class="sr-only">Edit</span> <i class="fa fa-pencil"></i></a> <a href="javascript:void(0);" class="btn btn-danger mb-2 delete-user" title="Delete" data-id="' +
-                items.id +
-                '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o"></i></a>'
-              );
-            },
-            title: "Action",
-          },
-        ],
-        order: [[1, "asc"]],
-      });
-      tableUsers
-        .on("order.dt search.dt", function () {
-          tableUsers
-            .column(0, { search: "applied", order: "applied" })
-            .nodes()
-            .each(function (cell, i) {
-              cell.innerHTML = i + 1;
-            });
-        })
-        .draw();
-    },
+        });
+      }
+    });
   });
 });

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Plantdatalogs extends Migration
+class Customers extends Migration
 {
 	public function up()
 	{
@@ -15,32 +15,26 @@ class Plantdatalogs extends Migration
 				'unsigned'          => TRUE,
 				'auto_increment'    => TRUE
 			],
-			'device' => [
+			'name' => [
+				'type'             		=> 'VARCHAR',
+				'constraint'        	=> '100',
+			],
+			'address' => [
 				'type'              => 'VARCHAR',
-				'constraint'        => '100',
+				'constraint'        => '200',
 			],
-			'water' => [
-				'type'              => 'int',
-				'null' 								=> FALSE,
+			'phone' => [
+				'type'             		=> 'VARCHAR',
+				'constraint'        	=> '100',
 			],
-			'air' => [
-				'type'              => 'int',
-				'null' 								=> FALSE,
+			'email' => [
+				'type'              	=> 'VARCHAR',
+				'constraint'        	=> '100',
+				'unique'							=> true,
 			],
-			'humidity' => [
-				'type'              => 'int',
-				'null' 								=> FALSE,
-			],
-			'tds' => [
-				'type'              => 'int',
-				'null' 								=> FALSE,
-			],
-			'ph' => [
-				'type'              => 'int',
-				'null' 								=> FALSE,
-			],
-			'waterstatus' => [
-				'type'              => 'boolean',
+			'investment' => [
+				'type'              	=> 'ENUM("conservative", "moderate", "aggresive")',
+				'default' 						=> 'conservative',
 				'null' 								=> FALSE,
 			],
 			'created_by' => [
@@ -58,11 +52,11 @@ class Plantdatalogs extends Migration
 			'deleted_at datetime',
 		]);
 		$this->forge->addKey('id', TRUE);
-		$this->forge->createTable('plantdatalogs');
+		$this->forge->createTable('customers');
 	}
 
 	public function down()
 	{
-		
+		//
 	}
 }

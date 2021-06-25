@@ -8,6 +8,7 @@ class GrowInstallations extends BaseController
 {
 	public function index()
 	{
-		return view('growinstallations');
+		$data['title'] = 'Grow Installations - Tunas Farm';
+		return view('growinstallations', $data);
 	}
 }

@@ -8,7 +8,7 @@ class Companies extends BaseController
 {
 	public function index()
 	{
-	
-		return view('companies');
+		$data['title'] = 'Company - Tunas Farm';
+		return view('companies', $data);
 	}
 }

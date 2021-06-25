@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Customers extends Migration
+class Harvesting extends Migration
 {
 	public function up()
 	{
@@ -15,31 +15,29 @@ class Customers extends Migration
 				'unsigned'          => TRUE,
 				'auto_increment'    => TRUE
 			],
-			'name' => [
+			'transplanting' => [
 				'type'             		=> 'VARCHAR',
 				'constraint'        	=> '100',
 			],
-			'address' => [
-				'type'              => 'VARCHAR',
-				'constraint'        => '200',
+			
+			'tanggal' => [
+				'type'             		=> 'DATE',
 			],
-			'phone' => [
-				'type'             		=> 'VARCHAR',
-				'constraint'        	=> '100',
+			'terproses' => [
+				'type'              => 'BIGINT',
+				'constraint'        => 20,
 			],
-			'email' => [
-				'type'              	=> 'VARCHAR',
-				'constraint'        	=> '100',
-				'unique'							=> true,
+			'sisa' => [
+				'type'              => 'BIGINT',
+				'constraint'        => 20,
 			],
-			'company' => [
-				'type'             		=> 'VARCHAR',
-				'constraint'        	=> '100',
+			'status' => [
+				'type'              	=> 'ENUM("active", "inactive")',
+				'default' 				=> 'inactive',
+				'null' 					=> FALSE,
 			],
-			'investment' => [
-				'type'              	=> 'ENUM("conservative", "moderate", "aggresive")',
-				'default' 						=> 'conservative',
-				'null' 								=> FALSE,
+			'id_tanaman' => [
+				'type'             		=> 'INT',
 			],
 			'created_by' => [
 				'type'              	=> 'BIGINT',
@@ -56,7 +54,7 @@ class Customers extends Migration
 			'deleted_at datetime',
 		]);
 		$this->forge->addKey('id', TRUE);
-		$this->forge->createTable('customers');
+		$this->forge->createTable('harvesting');
 	}
 
 	public function down()

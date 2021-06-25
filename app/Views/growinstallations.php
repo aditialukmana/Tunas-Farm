@@ -21,18 +21,20 @@
       <div class="card">
         <div class="text-left" style="margin-bottom:10px;margin-top:20px">
           <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#modal_create">Create
-            New GrowInstallations</button>
+            New Grow Installations</button>
         </div>
         <div class="body">
           <div class="table-responsive">
-            <table class="table table-hover table-custom spacing5" id="tableGrow" data-url="<?php echo base_url('api/growinstallations'); ?>">
+            <table class="table table-hover table-custom spacing5" id="tableGrow" data-url="<?= base_url('api/growinstallations/'); ?>">
               <thead>
                 <tr>
-                  <th>No</th>
                   <th>Code</th>
+                  <th>Customer</th>
+                  <th>Company</th>
                   <th>Type</th>
+                  <th>Site</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th style="width:10%;">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -49,7 +51,7 @@
 <div class="modal fade" id="modal_create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" action="<?php echo base_url('api/growinstallations/create'); ?>" id="create_Grow_form">
+      <form id="create_Grow_form">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Create Grow Installations</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -58,25 +60,72 @@
         </div>
         <div class="modal-body">
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Name</label>
-            <input type="text" id="name" name="name" class="form-control" autocomplete="off">
+            <?php
+            $code = rand(1, 100);
+            if ($code <= 10) {
+              $kodePlant = "GI0" . $code;
+            } else {
+              $kodePlant = "GI" . $code;
+            }
+            ?>
+            <input type="hidden" id="code" name="code" value="<?= $kodePlant ?>">
+            <label for="releaseName" class="control-label">Customer</label>
+            <select class="form-control" id="customer" name="customer">
+              <option>Choose...</option>
+
+            </select>
           </div>
           <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Address</label>
-            <textarea id="address" name="address" class="form-control" autocomplete="off"> </textarea>
+            <label for="releaseName" class="control-label">Company</label>
+            <select class="form-control" id="company" name="company">
+              <option>Choose...</option>
+
+            </select>
           </div>
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Phone</label>
-            <input type="text" id="phone" name="phone" class="form-control" autocomplete="off">
+            <label for="code" class="control-label">Type</label>
+            <select class="form-control" id="type" name="type">
+              <option selected>Choose...</option>
+              <option value="tower">Tower</option>
+              <option value="flat bed">Flat Bed</option>
+              <option value="home kit">Home Kit</option>
+            </select>
+          </div>
+          <div class="form-group mb-3" id="grow_count" hidden>
+            <label for="code" class="control-label">Level Count</label>
+            <input type="number" name="level_count" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_hole" hidden>
+            <label for="code" class="control-label">Level Hole</label>
+            <input type="number" name="level_hole" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_holes" hidden>
+            <label for="code" class="control-label">Hole</label>
+            <input type="number" id="hole" name="hole" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_sites" hidden>
+            <label for="code" class="control-label">Site</label>
+            <select name="site" id="site" class="form-control">
+              <option>Choose...</option>
+            </select>
+          </div>
+          <div class="form-group mb-3" id="grow_floor" hidden>
+            <label for="code" class="control-label">Floor</label>
+            <input type="number" id="floors" name="floor" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Email</label>
-            <input type="text" id="email" name="email" class="form-control" autocomplete="off">
+            <label for="code" class="control-label">Status</label>
+            <select class="form-control" id="status" name="status">
+              <option selected>Choose...</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-round btn-primary">Submit</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-round btn-primary" id="add_grow">Submit</button>
+        </div>
       </form>
     </div>
   </div>
@@ -85,43 +134,67 @@
 <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" id="update_Company_form">
+      <form id="update_Grow_form">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Customer</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Update Grow Installation</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group mb-3">
-            <input type="hidden" name="id" id="id">
-            <label for="code" class="control-label">Name</label>
-            <input type="text" id="name_edit" name="name" class="form-control" autocomplete="off">
+            <label for="releaseName" class="control-label">Customer</label>
+            <input type="text" name="id" id="edit_id" hidden>
+            <select class="form-control" id="customer_edit" name="customer">
+
+            </select>
           </div>
           <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Address</label>
-            <textarea id="address_edit" name="address" class="form-control" autocomplete="off"> </textarea>
+            <label for="releaseName" class="control-label">Company</label>
+            <select class="form-control" id="company_edit" name="company">
+
+            </select>
           </div>
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Phone</label>
-            <input type="text" id="phone_edit" name="phone" class="form-control" autocomplete="off">
+            <label for="code" class="control-label">Type</label>
+            <select class="form-control" id="type_edit" name="type">
+              <option value="tower">Tower</option>
+              <option value="flat bed">Flat Bed</option>
+              <option value="home kit">Home Kit</option>
+            </select>
+          </div>
+          <div class="form-group mb-3" id="grow_count_edit" hidden>
+            <label for="code" class="control-label">Level Count</label>
+            <input type="number" name="level_count" id="lvl_count_edit" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_hole_edit" hidden>
+            <label for="code" class="control-label">Level Hole</label>
+            <input type="number" name="level_hole" id="lvl_hole_edit" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_holes_edit" hidden>
+            <label for="code" class="control-label">Hole</label>
+            <input type="number" id="hole_edit" name="hole" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3" id="grow_sites" hidden>
+            <label for="code" class="control-label">Site</label>
+            <select name="site" id="site_edit" class="form-control">
+            </select>
+          </div>
+          <div class="form-group mb-3" id="grow_floor_edit" hidden>
+            <label for="code" class="control-label">Floor</label>
+            <input type="number" id="floor_edit" name="floor" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Email</label>
-            <input type="text" id="email_edit" name="email" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Company</label>
-            <input type="text" id="company_edit" name="company" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Investment</label>
-            <input type="text" id="investment_edit" name="investment" class="form-control" autocomplete="off">
+            <label for="code" class="control-label">Status</label>
+            <select class="form-control" id="status_edit" name="status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-round btn-primary">Submit</button>
+          <button type="button" class="btn btn-round btn-primary" id="edit_grow">Submit</button>
         </div>
       </form>
     </div>
@@ -148,5 +221,5 @@
     </div>
   </div>
 </div>
-
-<?= $this->endSection() ?><?= $this->extend('layout/main_layout') ?>
+<script src="<?= base_url('js/growinstallations.js') ?>"></script>
+<?= $this->endSection() ?>

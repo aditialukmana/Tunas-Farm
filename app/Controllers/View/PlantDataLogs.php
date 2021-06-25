@@ -8,6 +8,7 @@ class PlantDataLogs extends BaseController
 {
 	public function index()
 	{
-		return view('plantdatalogs');
+		$data['title'] = 'Plant Data Logs - Tunas Farm';
+		return view('plantdatalogs', $data);
 	}
 }

@@ -29,13 +29,13 @@
               <thead>
                 <tr>
                   <th>Device</th>
-                  <th>Water</th>
-                  <th>Air</th>
+                  <th>Grow Installation</th>
+                  <th>Water Temperature</th>
+                  <th>Air Temperature</th>
                   <th>Humidity</th>
                   <th>TDS</th>
                   <th>PH</th>
-                  <th>Water Status</th>
-                  <th>Action</th>
+                  <th style="width:10%;">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -54,9 +54,9 @@
 <div class="modal fade" id="modal_create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" id="create_PlantData_form">
+      <form id="create_PlantData_form">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create Contract</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Create Plant Data Logs</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -64,15 +64,23 @@
         <div class="modal-body">
           <div class="form-group mb-3">
             <label for="code" class="control-label">Device</label>
-            <input type="text" id="device" name="device" class="form-control" autocomplete="off">
+            <select name="device" id="device" class="form-control">
+              <option>Choose...</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="code" class="control-label">Grow Installation</label>
+            <select name="grow_installation" id="grow_installation" class="form-control">
+              <option>Choose...</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Water Temperature</label>
-            <input type="text" id="water" name="water_temperature" class="form-control" autocomplete="off">
+            <input type="text" id="water" name="water" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Air Temperature</label>
-            <input type="text" id="air" name="air_temperature" class="form-control" autocomplete="off">
+            <input type="text" id="air" name="air" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Humidity</label>
@@ -86,14 +94,10 @@
             <label for="code" class="control-label">PH</label>
             <input type="text" id="ph" name="ph" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Water Ink Status</label>
-            <input type="text" id="water_status" name="water_ink_status" class="form-control" autocomplete="off">
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-round btn-primary">Submit</button>
+          <button type="button" class="btn btn-round btn-primary" id="add_plantdata">Submit</button>
         </div>
       </form>
     </div>
@@ -171,5 +175,5 @@
     </div>
   </div>
 </div>
-
+<script src="<?= base_url('js/plantdatalogs.js') ?>"></script>
 <?= $this->endSection() ?>

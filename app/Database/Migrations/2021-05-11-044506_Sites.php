@@ -28,13 +28,13 @@ class Sites extends Migration
 				'constraint'        => '200',
 			],
 			'type' => [
-				'type'             		=> 'ENUM("Indoor", "Outdoor")',
-				'default' 						=> 'Indoor',
+				'type'             		=> 'ENUM("indoor", "outdoor")',
+				'default' 						=> 'indoor',
 				'null' 								=> FALSE,
 			],
 			'subtype' => [
-				'type'             		=> 'ENUM("Warehouse", "Shophouse", "Open Space")',
-				'default' 						=> 'Warehouse',
+				'type'             		=> 'ENUM("warehouse", "shophouse", "open space")',
+				'default' 						=> 'warehouse',
 				'null' 								=> FALSE,
 			],
 			'floor' => [
@@ -50,6 +50,9 @@ class Sites extends Migration
 				'type'             		=> 'VARCHAR',
 				'constraint'        	=> '100',
 			],
+			'address' => [
+				'type'             		=> 'TEXT',
+			],
 			'jalan' => [
 				'type'             		=> 'TEXT',
 			],
@@ -61,12 +64,17 @@ class Sites extends Migration
 				'type'             		=> 'VARCHAR',
 				'constraint'        	=> '100',
 			],
-			'maps' => [
-				'type'             		=> 'BIGINT',
+			'latitude' => [
+				'type'             		=> 'VARCHAR',
+				'constraint'				=> '100',
+			],
+			'longtitude' => [
+				'type'             		=> 'VARCHAR',
+				'constraint'				=> '100',
 			],
 			'building_status' => [
-				'type'             		=> 'ENUM("Owned","Rent")',
-				'default' 						=> 'Owned',
+				'type'             		=> 'ENUM("owned","rent")',
+				'default' 						=> 'owned',
 				'null' 								=> FALSE,
 			],
 			'rent_period' => [

@@ -8,6 +8,7 @@ class Devices extends BaseController
 {
 	public function index()
 	{
-		return view('devices');
+		$data['title'] = 'Devices - Tunas Farm';
+		return view('devices', $data);
 	}
 }

@@ -1,69 +1,107 @@
-$(document).ready(function () { 
+var urlRoles = $("#tableRoles").data("url");
+var tableRoles = null;
+$(document).ready(function () {
+  tableRoles = $("#tableRoles").DataTable({
+    ajax: urlRoles,
+    columns: [
+      { data: "name", title: "Name" },
+      { data: "description", title: "Description" },
+      {
+        data: (items) => {
+          return (
+            '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-role" title="Edit" data-id="' +
+            items.id +
+            '" data-toggle="modal" data-target="#modal_edit"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-role" title="Delete" data-id="' +
+            items.id +
+            '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
+          );
+        },
+        title: "Action",
+      },
+    ],
+  });
+
+  $("#add_role").click(function () {
+    var formData = new FormData($("#create_Role_form")[0]);
     $.ajax({
-      url: $("#tableRoles").data("url"),
-      type: "get",
-      async: true,
+      url: urlRoles,
+      type: "POST",
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
       dataType: "json",
       success: function (data) {
-        var i = 1;
-        var tableUsers = $("#tableRoles").DataTable({
-          data: data,
-          columns: [
-            { data: null, title: "No", width: "10%" },
-            { data: "code", title: "Role ID" },
-            { data: "name", title: "Name" },
-            {
-              data: (items) => {
-                return (
-                  '<a href="javascript:void(0);" class="btn btn-primary mb-2 detail-user" title="Details" data-id="' +
-                  items.id +
-                  '" data-toggle="modal" data-target="#detailModal"><span class="sr-only">Details</span> <i class="fa fa-info"></i></a> <a href="javascript:void(0);" onclick="return editUser();" class="btn btn-success mb-2" title="Edit" data-id="' +
-                  items.id +
-                  '" data-toggle="modal" data-target="#modal_update"><span class="sr-only">Edit</span> <i class="fa fa-pencil"></i></a> <a href="javascript:void(0);" class="btn btn-danger mb-2 delete-user" title="Delete" data-id="' +
-                  items.id +
-                  '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o"></i></a>'
-                );
-              },
-              title: "Action",
-            },
-          ],
-          order: [[1, "asc"]],
-        });
-        tableUsers
-          .on("order.dt search.dt", function () {
-            tableUsers
-              .column(0, { search: "applied", order: "applied" })
-              .nodes()
-              .each(function (cell, i) {
-                cell.innerHTML = i + 1;
-              });
-          })
-          .draw();
+        notifAddSuccess();
+        $("#modal_create").modal("hide");
+        $("#create_Role_form")[0].reset();
+        tableRoles.ajax.reload();
       },
     });
   });
 
+  $(document).on("click", ".edit-role", function (e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    $.ajax({
+      url: urlRoles + "/" + id,
+      type: "GET",
+      async: true,
+      dataType: "json",
+      success: function (data) {
+        $("#edit_id").val(data.id);
+        $("#name_edit").val(data.name);
+        $("#description_edit").text(data.description);
+      },
+    });
+  });
 
+  $("#edit_role").click(function () {
+    var edit_id = $("#edit_id").val();
+    var dataJson = $("#edit_Role_form").serialize();
+    $.ajax({
+      url: urlRoles + "/" + edit_id,
+      type: "PUT",
+      data: dataJson,
+      dataType: "json",
+      success: function (data) {
+        notifUpdateSuccess();
+        $("#modal_edit").modal("hide");
+        $("#edit_Role_form")[0].reset();
+        tableRoles.ajax.reload();
+      },
+    });
+  });
 
-  function tambahRoles() {
-    $(document).ready(function () {
-      $("#create_Role_form").on("submit", function () {
-        var dataJson = {
-          [csrfName]: csrfHash,
-          name: $("#role_name").val(),
-          code: $("#role_id").val(),
-        };
-  
+  $(document).on("click", ".delete-role", function (e) {
+    e.preventDefault();
+    var del_id = $(this).data("id");
+    Swal.fire({
+      title: "Apakah kamu yakin?",
+      text: "Data yang telah terhapus tidak bisa dikembalikan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, hapus!",
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
-          url: "http://localhost/tunasfarm/api/roles",
-          type: "post",
-          data: dataJson,
+          url: urlRoles + "/" + del_id,
+          type: "DELETE",
+          data: { id: del_id },
+          async: true,
           dataType: "json",
-          success: function (data) {
-            console.log(data);
+          success: function (response) {
+            notifDeleteSuccess();
+            tableRoles.ajax.reload();
+          },
+          error: function (e) {
+            console.log("error", e);
           },
         });
-      });
+      }
     });
-  }
-  
+  });
+});

@@ -4,10 +4,15 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-	
+
 	public function user()
 	{
-		return view('layout/main_layout');
-	
+		
+		$data['title'] = "Dashboard - Tunas Farm";
+		if (!isset(user()->username)) {
+			return redirect()->to('login'); 
+		} else {
+			return view('index', $data);
+		}
 	}
 }

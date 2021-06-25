@@ -3,7 +3,7 @@
       <div class="container-fluid">
         <div class="navbar-left">
           <div class="navbar-btn">
-            <a href="<?php echo base_url('admin'); ?>"><img src="<?php echo base_url(); ?>/common/images/icon-sysmex.png" alt="Logo" class="img-fluid logo"></a>
+            
             <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
           </div>
         </div>
@@ -16,11 +16,11 @@
                     <img src="<?php echo base_url(); ?>/theme/images/user.png" class="user-photo" alt="User Profile Picture">
                   </div>
                   <div class="dropdown">
-                    <span>Welcome,<?= user()->username; ?></span>
-                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><?php echo session()->get('user_name'); ?></strong></a>
+                    <span>Welcome,<?= user()->fullname; ?></span>
+                    <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><?=user()->username; ?></strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account vivify flipInY">
                       <li><a href="<?php echo base_url('admin/profile'); ?>"><i class="icon-user"></i>My Profile</a></li>
-                      <li><a href="<?php echo base_url('logout');?>"><i class="icon-power"></i>Sign Out</a></li>
+                      <li><a href="<?= base_url('logout');?>"><i class="icon-power"></i>Sign Out</a></li>
                     </ul>
                   </div>
                 </div>

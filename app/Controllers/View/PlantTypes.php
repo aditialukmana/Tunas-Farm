@@ -6,8 +6,10 @@ use App\Controllers\BaseController;
 
 class PlantTypes extends BaseController
 {
+
 	public function index()
 	{
-		return view('planttypes');
+		$data['title'] = 'Plant Types - Tunas Farm';
+		return view('planttypes', $data);
 	}
 }

@@ -25,15 +25,16 @@
         </div>
         <div class="body">
           <div class="table-responsive">
-          <table class="table table-hover table-custom spacing5" id="tableSites" data-url="<?php echo base_url('api/sites'); ?>">
+            <table class="table table-hover table-custom spacing5" id="tableSites" data-url="<?php echo base_url('api/sites/'); ?>">
               <thead>
                 <tr>
-                  <th>No</th>
+                  <th>Code</th>
+                  <th>Name</th>
                   <th>Company</th>
                   <th>Type</th>
-                  <th>Building Area</th>
+                  <th>Subtype</th>
                   <th>Kota</th>
-                  <th>Actions</th>
+                  <th style="width: 10%;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,37 +51,56 @@
 <div class="modal fade" id="modal_create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" id="create_Site_form">
+      <form id="create_Site_form" enctype="multipart/form-data">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Create Site</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" id="btnCreate" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group mb-3">
+          <input type="text" name="code" id="code" hidden>
             <label for="code" class="control-label">Name</label>
             <input type="text" id="name" name="name" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Company</label>
-            <input type="text" id="company" name="company" class="form-control" autocomplete="off">
+            <select name="company" id="company" class="form-control">
+
+              <option>Choose...</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Type</label>
-            <input type="text" id="type" name="type" class="form-control" autocomplete="off">
+            <select class="form-control" id="type" name="type">
+              <option selected>Choose...</option>
+              <option value="indoor">Indoor</option>
+              <option value="outdoor">Outdoor</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Subtype</label>
-            <input type="text" id="subtype" name="subtype" class="form-control" autocomplete="off">
+            <select class="form-control" id="subtype" name="subtype">
+              <option selected>Choose...</option>
+              <option value="warehouse">Warehouse</option>
+              <option value="shophouse">Shophouse</option>
+              <option value="open spcae">Open Space</option>
+            </select>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" id="floorr" hidden>
             <label for="releaseName" class="control-label">Floor</label>
             <input type="number" id="floor" name="floor" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Building Area</label>
-            <input type="text" id="building_area" name="building_area" class="form-control" autocomplete="off">
+            <select class="form-control" id="building_area" name="building_area">
+              <option selected>Choose...</option>
+              <option value="70 m2 - 100 m2">70 m2 - 100 m2</option>
+              <option value="100 m2 - 500 m2">100 m2 - 500 m2</option>
+              <option value="500 m2 - 1000 m2">500 m2 - 1000 m2</option>
+              <option value=">1000 m2">>1000 m2</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Photo</label>
@@ -98,40 +118,48 @@
             <label for="releaseName" class="control-label">Kota</label>
             <input type="text" id="kota" name="kota" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-5">
             <label for="releaseName" class="control-label">Provinsi</label>
             <input type="text" id="provinsi" name="provinsi" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Maps</label>
-            <input type="text" id="maps" name="maps" class="form-control" autocomplete="off">
+          <div class="form-group mb-5">
+            <h5>Maps</h5>
+            <label for="releaseName" class="control-label">Latitude</label>
+            <input type="text" id="lat" name="latitude" class="form-control" autocomplete="off">
+            <label for="releaseName" class="control-label">Longtitude</label>
+            <input type="text" id="long" name="longtitude" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Building Status</label>
-            <input type="text" id="building_status" name="building_status" class="form-control" autocomplete="off">
+            <select class="form-control" id="building_status" name="building_status">
+              <option selected>Choose...</option>
+              <option value="owned">Owned</option>
+              <option value="rent">Rent</option>
+            </select>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" hidden id="period">
             <label for="releaseName" class="control-label">Rent Period</label>
-            <input type="text" id="rent_period" name="rent_period" class="form-control" autocomplete="off">
+            <input type="number" id="rent_period" name="rent_period" placeholader="Year" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" hidden id="cost">
             <label for="releaseName" class="control-label">Rent Cost</label>
-            <input type="text" id="rent_cost" name="rent_cost" class="form-control" autocomplete="off">
+            <input type="number" id="rent_cost" name="rent_cost" class="form-control" autocomplete="off">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-round btn-primary"x>Submit</button>
+          <button type="button" class="btn btn-round btn-primary" id="add_site">Submit</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
+
 <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" id="edit_Site_form">
+      <form id="edit_Site_form">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Edit Site</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,32 +168,43 @@
         </div>
         <div class="modal-body">
           <div class="form-group mb-3">
+            <input type="text" name="id" id="edit_id" hidden>
             <label for="code" class="control-label">Name</label>
             <input type="text" id="name_edit" name="name" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Company</label>
-            <input type="text" id="company_edit" name="company" class="form-control" autocomplete="off">
+            <select name="company" id="company_edit" class="form-control">
+
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Type</label>
-            <input type="text" id="type_edit" name="type" class="form-control" autocomplete="off">
+            <select class="form-control" id="type_edit" name="type">
+              <option value="indoor">Indoor</option>
+              <option value="outdoor">Outdoor</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Subtype</label>
-            <input type="text" id="subtype_edit" name="subtype" class="form-control" autocomplete="off">
+            <select class="form-control" id="subtype_edit" name="subtype">
+              <option value="warehouse">Warehouse</option>
+              <option value="shophouse">Shophouse</option>
+              <option value="open spcae">Open Space</option>
+            </select>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" id="floorr_edit" hidden>
             <label for="releaseName" class="control-label">Floor</label>
             <input type="number" id="floor_edit" name="floor" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Building Area</label>
-            <input type="text" id="building_area_edit" name="building_area" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Photo</label>
-            <input type="file" id="photo_edit" name="photo" class="form-control" autocomplete="off">
+            <select class="form-control" id="building_area_edit" name="building_area">
+              <option value="70 m2 - 100 m2">70 m2 - 100 m2</option>
+              <option value="100 m2 - 500 m2">100 m2 - 500 m2</option>
+              <option value="500 m2 - 1000 m2">500 m2 - 1000 m2</option>
+              <option value=">1000 m2">>1000 m2</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Address</label>
@@ -179,54 +218,61 @@
             <label for="releaseName" class="control-label">Kota</label>
             <input type="text" id="kota_edit" name="kota" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-5">
             <label for="releaseName" class="control-label">Provinsi</label>
             <input type="text" id="provinsi_edit" name="provinsi" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Maps</label>
-            <input type="text" id="maps_edit" name="maps" class="form-control" autocomplete="off">
+            <h5>Maps</h5>
+            <label for="releaseName" class="control-label">Latitude</label>
+            <input type="text" id="lat_edit" name="latitude" class="form-control" autocomplete="off">
+            <label for="releaseName" class="control-label">Longtitude</label>
+            <input type="text" id="long_edit" name="longtitude" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Building Status</label>
-            <input type="text" id="building_status_edit" name="building_status" class="form-control" autocomplete="off">
+            <select class="form-control" id="building_status_edit" name="building_status">
+              <option value="owned">Owned</option>
+              <option value="rent">Rent</option>
+            </select>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" hidden id="period_edit">
             <label for="releaseName" class="control-label">Rent Period</label>
-            <input type="text" id="rent_period_edit" name="rent_period" class="form-control" autocomplete="off">
+            <input type="number" id="rent_period_edit" name="rent_period" placeholader="Year" class="form-control" autocomplete="off">
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-3" hidden id="cost_edit">
             <label for="releaseName" class="control-label">Rent Cost</label>
-            <input type="text" id="rent_cost_edit" name="rent_cost" class="form-control" autocomplete="off">
+            <input type="number" id="rent_cost_edit" name="rent_cost" class="form-control" autocomplete="off">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-round btn-primary">Submit</button>
+          <button type="button" class="btn btn-round btn-primary" id="edit_site">Submit</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="modal_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal" id="detailModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
+        <h5 class="modal-title">Details Site</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p>Are you sure you will delete this data?</p>
+      <div class="modal-body" id="detailSite">
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-round btn-default" data-dismiss="modal">No</button>
-        <a href="#" id="delete_footer" type="button" class="btn btn-round btn-danger">Yes</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
+<script src="<?= base_url('js/sites.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -27,6 +27,10 @@ class Company extends Migration
 				'type'             		=> 'TEXT',
 
 			],
+			'customer' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '200',
+			],
 			'phone' => [
 				'type'             		=> 'VARCHAR',
 				'constraint'        	=> '100',

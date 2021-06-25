@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\URI;
 
 class Users extends ResourceController
 {
@@ -16,13 +17,21 @@ class Users extends ResourceController
 	public function __construct()
 	{
 		$this->validation = \Config\Services::validation();
+		helper('system_log');
 	}
 
 	// get all product
 	public function index()
 	{
 		$data = $this->model->getData();
-		return $this->respond($data, 200);
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -30,7 +39,14 @@ class Users extends ResourceController
 	{
 		$data = $this->model->getData($id);
 		if ($data) {
-			return $this->respond($data);
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get Single Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}
@@ -40,26 +56,20 @@ class Users extends ResourceController
 	public function create()
 	{
 		$data = $this->request->getPost();
-		$this->validation->run($data, 'user_create');
-		$errors = $this->validation->getErrors();
-
-		if ($errors) {
-			log_message('error', implode(",", array_values($errors)));
-			return $this->fail($errors);
-		}
-
-		$user = new \App\Entities\Users();
-		$user->fill($data);
-		if (isset($data['password'])) {
-			unset($user->password);
-		} else {
-			$user->setPassword($data['password']);
-		}
-
-		// $user->created_by = 0;
-
-		if ($this->model->save($user)) {
-			return redirect()->to(base_url(''));
+	
+		if ($data) {
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Create User';
+			sys_log($url, $message);
+			$this->model->save($data);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondCreated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -68,22 +78,20 @@ class Users extends ResourceController
 	// update product
 	public function update($id = null)
 	{
-		$data = $this->request->getPost();
-		$this->validation->run($data, 'user_update');
-		$errors = $this->validation->getErrors();
-
-		if ($errors) {
-			log_message('error', implode(",", array_values($errors)));
-			return $this->fail($errors);
-		}
-
-		$user = new \App\Entities\Users();
-		$user->fill($data);
-		
-		$user->setPassword($data['password']);
-		
-		if ($this->model->update($id, $user)) {
-			return redirect()->to(base_url(''));
+		$data = $this->request->getRawInput();
+		if ($data) {
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update User';
+			sys_log($url, $message);
+			$this->model->update($id, $data);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondUpdated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -95,6 +103,9 @@ class Users extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Delete User';
+			sys_log($url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,
@@ -102,10 +113,18 @@ class Users extends ResourceController
 					'success' => 'Data Deleted'
 				]
 			];
-
 			return $this->respondDeleted($response);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}
+	}
+
+	public function login()
+	{
+		$json = $this->request->getJSON();
+		$user = $json->username;
+		$pass = $json->password;
+		
+		$data = $this->model->where('username', $user)->first();
 	}
 }

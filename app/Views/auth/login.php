@@ -61,17 +61,7 @@
                                         </button>
                                     </form>
                                     <hr>
-                                    <?php if ($config->activeResetter): ?>
-                                    <div class="text-center">
-                                        <a class="small" href="<?= route_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a>
-                                    </div>
-                                    <?php endif; ?>
 
-                                    <?php if ($config->allowRegistration) : ?>
-                                    <div class="text-center">
-                                        <a class="small" href="<?= route_to('register') ?>"><?=lang('Auth.needAnAccount')?></a>
-                                    </div>
-                                    <?php endif; ?>
                 </div>
             </div>
         </div>

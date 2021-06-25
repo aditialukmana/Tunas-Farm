@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Growsinstallations extends Migration
+class Plantdatalogs extends Migration
 {
 	public function up()
 	{
@@ -15,38 +15,32 @@ class Growsinstallations extends Migration
 				'unsigned'          => TRUE,
 				'auto_increment'    => TRUE
 			],
-			'code' => [
-				'type'              => 'VARCHAR',
-				'constraint'        => '100',
-				'null' 								=> FALSE,
-			],
-			'type' => [
-				'type'              	=> 'ENUM("Tower", "Grow Bed", "Home Kit")',
-				'default' 						=> 'Tower',
-				'null' 								=> FALSE,
-			],
-			'level_count' => [
-				'type'              => 'int',
-
-			],
-			'levelhole' => [
-				'type'              => 'int',
-
-			],
-			'hole' => [
-				'type'              => 'int',
-			],
-			'site' => [
+			'device' => [
 				'type'              => 'VARCHAR',
 				'constraint'        => '100',
 			],
-			'floor' => [
-				'type'              => 'int',
+			'grow_installation' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
 			],
-			
-			'status' => [
-				'type'              	=> 'ENUM("Active", "Inactive")',
-				'default' 						=> 'Active',
+			'water' => [
+				'type'              => 'int',
+				'null' 								=> FALSE,
+			],
+			'air' => [
+				'type'              => 'int',
+				'null' 								=> FALSE,
+			],
+			'humidity' => [
+				'type'              => 'int',
+				'null' 								=> FALSE,
+			],
+			'tds' => [
+				'type'              => 'int',
+				'null' 								=> FALSE,
+			],
+			'ph' => [
+				'type'              => 'int',
 				'null' 								=> FALSE,
 			],
 			'created_by' => [
@@ -64,11 +58,11 @@ class Growsinstallations extends Migration
 			'deleted_at datetime',
 		]);
 		$this->forge->addKey('id', TRUE);
-		$this->forge->createTable('grow_installations');
+		$this->forge->createTable('plantdatalogs');
 	}
 
 	public function down()
 	{
-		//
+		
 	}
 }

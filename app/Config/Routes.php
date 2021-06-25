@@ -38,13 +38,26 @@ $routes->get('/register', 'auth::register');
 // $routes->get('/admin/index','Admin::index',['filter'=>'role:admin,super_admin']);
 // $routes->get('/admin/(:num)','Admin::detail/$1',['filter'=>'role:admin,super_admin']);
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+	$routes->resource('users');
+	$routes->resource('authgroups');
+	$routes->resource('authgroupsusers');
 	$routes->resource('planttypes');
+	$routes->resource('roles');
 	$routes->resource('customers');
 	$routes->resource('contracts');
 	$routes->resource('plantdatalogs');
 	$routes->resource('companies');
 	$routes->resource('sites');
+	$routes->resource('devices');
+	$routes->resource('growinstallations');
+	$routes->resource('actuatordevices');
+	$routes->resource('actuatorsites');
 	$routes->resource('systemlogs');
+	$routes->resource('sprouting');
+	$routes->resource('seedling');
+	$routes->resource('grooming');
+	$routes->resource('transplanting');
+	$routes->resource('harvesting');
 });
 /*
  * --------------------------------------------------------------------

@@ -70,7 +70,6 @@ class Validation
 		'address'			 => 'required',
 		'phone'				 => 'required',
 		'email'        		 => 'required|valid_email[customers.email]',
-		'company'			 => 'required',
 		'investment'		 => 'required',
 	];
 

@@ -11,7 +11,7 @@ class CompaniesModel extends Model
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['prefix_code','name', 'address', 'phone', 'email', 'deleted_at'];
+    protected $allowedFields = ['prefix_code', 'name', 'address', 'customer', 'phone', 'email', 'deleted_at'];
 
     // protected $returnType = 'App\Entities\PlantDataLogs';
 
@@ -24,4 +24,14 @@ class CompaniesModel extends Model
         if ($id == false) return $this->findAll();
         return $this->where(['id' => $id])->first();
     }
+
+    public function joinData()
+    {
+        return $this->db->table('customers as cu')
+        ->select('co.id coid, cu.name cuname, co.name coname, co.phone cophone, co.email coemail, co.prefix_code cocode')
+        ->join('company as co', 'co.customer = cu.id')
+        ->where('co.deleted_at IS NULL')
+        ->get()->getResultArray();
+    }
 }
+    

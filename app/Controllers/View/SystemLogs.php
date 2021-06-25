@@ -7,6 +7,7 @@ class SystemLogs extends BaseController
 {
 	public function index()
 	{
-		return view('systemlogs');
+		$data['title'] = 'System Logs - Tunas Farm';
+		return view('systemlogs', $data);
 	}
 }

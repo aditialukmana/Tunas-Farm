@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf-token" content="7JxWIhWmWrhitG7OjY2YAuFFKgyMzl5d364nAQDZ">
     <link rel="icon" href="<?php echo base_url(); ?>/common/images/favicon.ico" type="image/x-icon">
-    <title></title>
+    <title>Login - Tunas Farm</title>
     <meta name="description" content="Tunasfarm ">
     <meta name="author" content="Tunasfarm ">
     <link rel="stylesheet" href="<?php echo base_url(); ?>/theme/css/site.min.css">

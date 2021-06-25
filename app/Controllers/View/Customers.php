@@ -8,6 +8,8 @@ class Customers extends BaseController
 {
 	public function index()
 	{
-		return view('customers');
+
+		$data['title'] = 'Customers - Tunas Farm';
+		return view('customers', $data);
 	}
 }

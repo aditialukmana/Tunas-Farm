@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\URI;
 
 class Customers extends ResourceController
 {
@@ -16,13 +17,21 @@ class Customers extends ResourceController
 	public function __construct()
 	{
 		$this->validation = \Config\Services::validation();
+		helper('system_log');
 	}
 
 	// get all product
 	public function index()
 	{
 		$data = $this->model->getData();
-		return $this->respond($data, 200);
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -30,7 +39,14 @@ class Customers extends ResourceController
 	{
 		$data = $this->model->getData($id);
 		if ($data) {
-			return $this->respond($data);
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get Single Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}
@@ -48,9 +64,19 @@ class Customers extends ResourceController
 			return $this->fail($errors);
 		}
 
-        if($data) {
-		$this->model->save($data);
-		return redirect()->to(base_url('view/customers'));
+		if ($data) {
+			$this->model->save($data);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Create Customer';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondCreated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -70,7 +96,17 @@ class Customers extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
-			return redirect()->to(base_url('view/customers'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update Customer';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondUpdated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -82,9 +118,20 @@ class Customers extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
-			return redirect()->to(base_url('view/customers'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Delete Customer';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 200,
+				'error'    => null,
+				'messages' => [
+					'success' => 'Data Deleted'
+				]
+			];
+			return $this->respondDeleted($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}
 	}
+
 }

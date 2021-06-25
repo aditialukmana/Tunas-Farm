@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Contracts extends Migration
+class Growsinstallations extends Migration
 {
 	public function up()
 	{
@@ -15,34 +15,46 @@ class Contracts extends Migration
 				'unsigned'          => TRUE,
 				'auto_increment'    => TRUE
 			],
+			'code' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
+				'null' 								=> FALSE,
+			],
+			'customer' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
+			],
 			'company' => [
-				'type'             		=> 'VARCHAR',
-				'constraint'        	=> '100',
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
+			],
+			'type' => [
+				'type'              	=> 'ENUM("tower", "grow bed", "home kit")',
+				'default' 						=> 'tower',
+				'null' 								=> FALSE,
+			],
+			'level_count' => [
+				'type'              => 'int',
+
+			],
+			'level_hole' => [
+				'type'              => 'int',
+
+			],
+			'hole' => [
+				'type'              => 'int',
 			],
 			'site' => [
 				'type'              => 'VARCHAR',
 				'constraint'        => '100',
 			],
-			'startperiod' => [
-				'type'             		=> 'VARCHAR',
-				'constraint'        	=> '100',
+			'floor' => [
+				'type'              => 'int',
 			],
-			'endperiod' => [
-				'type'              	=> 'VARCHAR',
-				'constraint'        	=> '100',
-			],
-			'contractdocument' => [
-				'type'             		=> 'VARCHAR',
-				'constraint'        	=> '100',
-				'null' 								=> FALSE,
-			],
-			'contractcommitment' => [
-				'type'              	=> 'int',
-				'null' 								=> FALSE,
-			],
-			'partnershipobjective' => [
-				'type'              	=> 'ENUM("Building Utilization", "Additional Income", "Main Income", "Agriculture Contribution")',
-				'default' 						=> 'Building Utilization',
+			
+			'status' => [
+				'type'              	=> 'ENUM("active", "inactive")',
+				'default' 						=> 'active',
 				'null' 								=> FALSE,
 			],
 			'created_by' => [
@@ -60,7 +72,7 @@ class Contracts extends Migration
 			'deleted_at datetime',
 		]);
 		$this->forge->addKey('id', TRUE);
-		$this->forge->createTable('contracts');
+		$this->forge->createTable('grow_installations');
 	}
 
 	public function down()

@@ -22,4 +22,14 @@ class ContractsModel extends Model
         if ($id == false) return $this->findAll();
         return $this->where(['id' => $id])->first();
     }
+
+    public function joinData()
+    {
+        return $this->db->table('contracts as con')
+            ->select('con.id conid, co.name coname, se.name sename, con.start_period constart, con.end_period conend, con.contract_commitment concom, con.partnership_objective conpart')
+            ->join('company as co', 'con.company = co.id')
+            ->join('sites as se', 'con.site = se.id')
+            ->where('con.deleted_at IS NULL')
+            ->get()->getResultArray();
+    }
 }

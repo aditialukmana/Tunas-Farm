@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\URI;
 
 class PlantDataLogs extends ResourceController
 {
@@ -16,13 +17,14 @@ class PlantDataLogs extends ResourceController
 	public function __construct()
 	{
 		$this->validation = \Config\Services::validation();
+		helper('system_log');
 	}
 
 	// get all product
 	public function index()
 	{
 		$data = $this->model->getData();
-		return $this->respond($data, 200);
+		return $this->respond(array('data'=>$data), 200);
 	}
 
 	// get single product
@@ -38,9 +40,9 @@ class PlantDataLogs extends ResourceController
 
 	// create a product
 	public function create()
-	{	
+	{
 		$image = $this->request->getFile('image');
-        $image->move(ROOTPATH . 'public/uploads');
+		$image->move(ROOTPATH . 'public/uploads');
 		$data = [
 			'name' => $this->request->getPost('name'),
 			'image' =>	$image,
@@ -49,9 +51,12 @@ class PlantDataLogs extends ResourceController
 			'est_weight' => $this->request->getPost('est_weight'),
 		];
 
-        if($data) {
-		$this->model->save($data);
-		$response = [
+		if ($data) {
+			$this->model->save($data);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Create Plant Data Log';
+			sys_log($url, $message);
+			$response = [
 				'status'   => 201,
 				'messages' => [
 					'success' => 'Data Saved'
@@ -59,7 +64,6 @@ class PlantDataLogs extends ResourceController
 				'data'			=> $data
 			];
 			return $this->respondCreated($response, 201);
-
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -69,9 +73,12 @@ class PlantDataLogs extends ResourceController
 	public function update($id = null)
 	{
 		$data = $this->request->getRawInput();
-        
+
 		if ($data) {
 			$this->model->update($id, $data);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update Plant Data Log';
+			sys_log($url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -79,8 +86,7 @@ class PlantDataLogs extends ResourceController
 				],
 				'data'			=> $data
 			];
-			return $this->respondCreated($response, 201);
-
+			return $this->respondUpdated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -92,6 +98,9 @@ class PlantDataLogs extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Delete Plant Data Log';
+			sys_log($url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -99,8 +108,7 @@ class PlantDataLogs extends ResourceController
 				],
 				'data'			=> $data
 			];
-			return $this->respondCreated($response, 201);
-
+			return $this->respondDeleted($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}

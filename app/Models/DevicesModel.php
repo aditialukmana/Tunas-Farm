@@ -11,7 +11,7 @@ class DevicesModel extends Model
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['code', 'type', 'site', 'floor', 'level_count', 'holes', 'status','deleted_at'];
+    protected $allowedFields = ['code', 'site', 'grow_installation', 'status','deleted_at'];
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';

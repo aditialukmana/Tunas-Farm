@@ -19,9 +19,8 @@ class SystemLogsModel extends Model
     protected $updatedField = 'updated_at';
     protected $deletedField = 'deleted_at';
 
-    public function getData($id = false)
-    {
-        if ($id == false) return $this->findAll();
-        return $this->where(['id' => $id])->first();
+    public function getData()
+    { 
+        return $this->findAll();;
     }
 }

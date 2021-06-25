@@ -4,6 +4,7 @@ namespace App\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\URI;
 
 class Companies extends ResourceController
 {
@@ -16,13 +17,32 @@ class Companies extends ResourceController
 	public function __construct()
 	{
 		$this->validation = \Config\Services::validation();
+		helper('system_log');
 	}
 
 	// get all product
 	public function index()
 	{
-		$data = $this->model->getData();
-		return $this->respond($data, 200);
+		$data = $this->model->joinData();
+		if($data) {
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get All Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
+		} else {
+			$response = [
+				'status'   => 400,
+				'messages' => [
+					'success' => 'Fail Get All Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 400);
+		}
 	}
 
 	// get single product
@@ -30,34 +50,43 @@ class Companies extends ResourceController
 	{
 		$data = $this->model->getData($id);
 		if ($data) {
-			return $this->respond($data);
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get Single Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
-	
+
 	public function create()
 	{
 		$nama = $this->request->getPost('name');
-		$arr = explode(" ",$nama);
+		$arr = explode(" ", $nama);
 		$skt = '';
 
-		foreach($arr as $kata) {
+		foreach ($arr as $kata) {
 			$skt .= substr($kata, 0, 1);
 		}
 
-		$prefix_code = $skt;
-		$address = $this->request->getPost('address');
-		$phone = $this->request->getPost('phone');
-		$email = $this->request->getPost('email');
+		$prefix_code	= $skt;
+		$address		= $this->request->getPost('address');
+		$customer		= $this->request->getPost('customer');
+		$phone 			= $this->request->getPost('phone');
+		$email 			= $this->request->getPost('email');
 
 		$data  = [
-			'prefix_code' => $prefix_code,
-			'name' => $nama,
-			'address' => $address,
-			'phone' => $phone,
-			'email' => $email
+			'prefix_code'	=> $prefix_code,
+			'name' 			=> $nama,
+			'address'		=> $address,
+			'customer'		=> $customer,
+			'phone'			=> $phone,
+			'email'			=> $email
 		];
 		$this->validation->run($data, 'company_create');
 		$errors = $this->validation->getErrors();
@@ -67,18 +96,19 @@ class Companies extends ResourceController
 			return $this->fail($errors);
 		}
 
-		// $company = new \App\Entities\Companies();
-		// $company->fill($data);
-		// if (isset($data['prefix_code'])) {
-		// 	unset($company->prefix_code);
-		// } else {
-		// 	$company->setPrefixCode($data['prefix_code']);
-		// }
-
-		// $user->created_by = 0;
-
-		if ($this->model->save($data)) {
-			return redirect()->to(base_url('view/companies'));
+		if ($data) {
+			$this->model->save($data);
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Create Company';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondCreated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -91,7 +121,17 @@ class Companies extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
-			return redirect()->to(base_url('view/companies'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update Company';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 201,
+				'messages' => [
+					'success' => 'Data Saved'
+				],
+				'data'			=> $data
+			];
+			return $this->respondUpdated($response, 201);
 		} else {
 			return $this->fail("Fail to save");
 		}
@@ -103,7 +143,17 @@ class Companies extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
-			return redirect()->to(base_url('view/companies'));
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Delete Company';
+			sys_log($url, $message);
+			$response = [
+				'status'   => 200,
+				'error'    => null,
+				'messages' => [
+					'success' => 'Data Deleted'
+				]
+			];
+			return $this->respondDeleted($response, 200);
 		} else {
 			return $this->failNotFound('No Data Found with id ' . $id);
 		}

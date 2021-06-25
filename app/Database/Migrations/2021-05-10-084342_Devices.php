@@ -24,9 +24,6 @@ class Devices extends Migration
 				'type'              	=> 'ENUM("Tower", "Grow Bed", "Home Kit")',
 				'default' 						=> 'Tower',
 				'null' 								=> FALSE,
-			],'site' => [
-				'type'              => 'VARCHAR',
-				'constraint'        => '100',
 			],
 			'floor' => [
 				'type'              => 'int',
@@ -39,9 +36,17 @@ class Devices extends Migration
 				'type'              => 'int',
 
 			],
+			'site' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
+			],
+			'grow_installation' => [
+				'type'              => 'VARCHAR',
+				'constraint'        => '100',
+			],
 			'status' => [
-				'type'              	=> 'ENUM("Active", "Inactive")',
-				'default' 						=> 'Active',
+				'type'              	=> 'ENUM("active", "inactive")',
+				'default' 						=> 'active',
 				'null' 								=> FALSE,
 			],
 			'created_by' => [

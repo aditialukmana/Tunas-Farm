@@ -7,7 +7,7 @@ class Sites extends BaseController
 {
 	public function index()
 	{
-		
-		return view('sites');
+		$data['title'] = 'Sites - Tunas Farm';
+		return view('sites', $data);
 	}
 }

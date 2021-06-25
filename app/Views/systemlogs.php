@@ -24,11 +24,11 @@
             <table class="table table-hover table-custom spacing5" id="tableSystemLogs" data-url="<?php echo base_url('api/systemlogs/'); ?>">
               <thead>
                 <tr>
-                  <th>No</th>
-                  <th>Timestamp</th>
-                  <th>User</th>
-                  <th>Controller</th>
-                  <th>Message</th>
+                  <th style="width: 10%;">No</th>
+                  <th style="width: 25%;">Timestamp</th>
+                  <th style="width: 20%;">User</th>
+                  <th style="width: 20%;">Controller</th>
+                  <th style="width: 25%;">Message</th>
                 </tr>
               </thead>
               <tbody>
@@ -41,5 +41,5 @@
     </div>
   </div>
 </div>
-
+<script src="<?= base_url('js/systemlogs.js') ?>"></script>
 <?= $this->endSection() ?>
