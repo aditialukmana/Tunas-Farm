@@ -56,7 +56,7 @@ $(document).ready(function () {
         );
         var site_edit = data.site;
         $.ajax({
-          url: "http://localhost:8080/api/sites/",
+          url: "http://localhost/tunasdash/api/sites/",
           type: "get",
           async: true,
           dataType: "json",
@@ -73,7 +73,7 @@ $(document).ready(function () {
           },
         });
         $.ajax({
-          url: "http://localhost:8080/api/devices/",
+          url: "http://localhost/tunasdash/api/devices/",
           type: "get",
           async: true,
           dataType: "json",
@@ -154,7 +154,7 @@ $(document).ready(function () {
   });
   // Tampil data Sites
   $.ajax({
-    url: "http://localhost:8080/api/sites/",
+    url: "http://localhost/tunasdash/api/sites/",
     type: "get",
     async: true,
     dataType: "json",
@@ -181,7 +181,7 @@ $(document).ready(function () {
   $("#site").change(function () {
     var site = $("#site option:selected").val();
     $.ajax({
-      url: "http://localhost:8080/api/sites/",
+      url: "http://localhost/tunasdash/api/sites/",
       type: "get",
       async: true,
       dataType: "json",
@@ -198,7 +198,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/devices/",
+      url: "http://localhost/tunasdash/api/devices/",
       type: "get",
       async: true,
       dataType: "json",

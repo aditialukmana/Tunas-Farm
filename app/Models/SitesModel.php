@@ -28,7 +28,7 @@ class SitesModel extends Model
     public function joinData()
     {
         return $this->db->table('company as co')
-        ->select('se.id seid, se.code secode, se.name sename, co.name coname,  se.type setype, se.subtype sesubtype, se.kota sekota')
+        ->select('se.id seid, se.code secode, se.name sename, co.id coid, co.name coname,  se.type setype, se.subtype sesubtype, se.kota sekota')
         ->join('sites as se', 'se.company = co.id')
         ->where('se.deleted_at IS NULL')
         ->get()->getResultArray();

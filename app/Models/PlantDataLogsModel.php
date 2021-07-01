@@ -11,7 +11,7 @@ class PlantDataLogsModel extends Model
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['device', 'water', 'air', 'humidity', 'tds', 'ph', 'water_ink_status', 'deleted_at'];
+    protected $allowedFields = ['device', 'grow_installation', 'water', 'air', 'humidity', 'tds', 'ph', 'water_ink_status', 'deleted_at'];
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';

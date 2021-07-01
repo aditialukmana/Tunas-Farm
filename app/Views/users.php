@@ -28,10 +28,10 @@
             <table class="table table-hover table-custom spacing5" id="tableUsers" data-url="<?php echo base_url('api/users'); ?>">
               <thead>
                 <tr>
-                  <th>Email</th>
                   <th>Username</th>
-                  <th>Full Name</th>
-                  <th>Action</th>
+                  <th>Fullname</th>
+                  <th>Email</th>
+                  <th style="width: 10%;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -56,27 +56,24 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Email</label>
-            <input type="email" id="email" name="email" class="form-control" autocomplete="off">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <label for="code" class="control-label">Email</label>
+              <input type="text" id="email" name="email" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group mb-3">
+              <label for="releaseName" class="control-label">Username</label>
+              <input type="text" id="username" name="username" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group mb-3">
+              <label for="releaseName" class="control-label">Fullname</label>
+              <input type="text" id="fullname" name="fullname" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group mb-3">
+              <label for="releaseName" class="control-label">Password</label>
+              <input type="password" id="password" name="password" class="form-control" autocomplete="off">
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Username</label>
-            <input type="text" id="username" name="username" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Full Name</label>
-            <input type="text" id="fullname" name="fullname" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Password</label>
-            <input type="text" id="password" name="password" class="form-control" autocomplete="off">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-round btn-primary" id="add_user">Submit</button>
-        </div>
       </form>
     </div>
   </div>

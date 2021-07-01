@@ -13,13 +13,12 @@
               <li>
                 <div class="user-account">
                   <div class="user_div">
-                    <img src="<?php echo base_url(); ?>/theme/images/user.png" class="user-photo" alt="User Profile Picture">
+                    <img src="<?php echo base_url('public/'); ?>/theme/images/user.png" class="user-photo" alt="User Profile Picture">
                   </div>
                   <div class="dropdown">
                     <span>Welcome,<?= user()->fullname; ?></span>
                     <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown"><strong><?=user()->username; ?></strong></a>
                     <ul class="dropdown-menu dropdown-menu-right account vivify flipInY">
-                      <li><a href="<?php echo base_url('admin/profile'); ?>"><i class="icon-user"></i>My Profile</a></li>
                       <li><a href="<?= base_url('logout');?>"><i class="icon-power"></i>Sign Out</a></li>
                     </ul>
                   </div>

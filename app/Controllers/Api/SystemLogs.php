@@ -22,13 +22,23 @@ class SystemLogs extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
-		$response = [
-			'status'   => 200,
-			'messages' => [
-				'success' => 'Get All Data'
-			],
-			'data'			=> $data
-		];
-		return $this->respond($response, 200);
+		if ($data) {
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get All Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
+		} else {
+			$response = [
+				'status'   => 400,
+				'messages' => [
+					'failed' => 'No Data'
+				]
+			];
+			return $this->respond($response, 400);
+		}
 	}
 }

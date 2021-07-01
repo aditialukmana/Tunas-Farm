@@ -24,7 +24,14 @@ class Seedling extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
-		return $this->respond(array('data' =>$data), 200);
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -34,7 +41,7 @@ class Seedling extends ResourceController
 		if ($data) {
 			return $this->respond($data);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
@@ -64,7 +71,7 @@ class Seedling extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -72,7 +79,7 @@ class Seedling extends ResourceController
 	public function update($id = null)
 	{
 		$data = $this->request->getRawInput();
-		
+
 		if ($data) {
 			$this->model->update($id, $data);
 			$url = $this->request->uri->getSegment(2);
@@ -87,7 +94,7 @@ class Seedling extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -109,7 +116,7 @@ class Seedling extends ResourceController
 			];
 			return $this->respondDeleted($response);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

@@ -22,7 +22,6 @@
         <div class="text-left" style="margin-bottom:10px;margin-top:20px">
           <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#modal_create_company">Create
             New Company</button>
-            <button type="button" id="test">test</button>
         </div>
         <div class="body">
           <div class="table-responsive">
@@ -153,5 +152,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/companies.js') ?>"></script>
+<script src="<?= base_url('public/js/companies.js') ?>"></script>
 <?= $this->endSection() ?>

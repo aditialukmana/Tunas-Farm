@@ -1,7 +1,6 @@
 var urlPlantTypes = $("#tablePlantTypes").data("url");
-console.log(urlPlantTypes);
 var tablePlantTypes = null;
-var url = "http://localhost:8080/uploads/";
+var url = "http://localhost/tunasdash/public/uploads/";
 $(document).ready(function () {
   tablePlantTypes = $("#tablePlantTypes").DataTable({
     ajax: urlPlantTypes,
@@ -32,7 +31,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions ",
       },
     ],
     order: [[1, "desc"]],

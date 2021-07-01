@@ -3,7 +3,7 @@
 
 function sys_log($controller, $message){
     $session = \Config\Services::session();
-    $param['user'] = $session->username;
+    $param['user'] = "joko";
     $param['controller'] = $controller;
     $param['message']   = $message;
 

@@ -274,5 +274,5 @@
   </div>
 </div>
 
-<script src="<?= base_url('js/sites.js') ?>"></script>
+<script src="<?= base_url('public/js/sites.js') ?>"></script>
 <?= $this->endSection() ?>

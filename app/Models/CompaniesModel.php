@@ -28,7 +28,7 @@ class CompaniesModel extends Model
     public function joinData()
     {
         return $this->db->table('customers as cu')
-        ->select('co.id coid, cu.name cuname, co.name coname, co.phone cophone, co.email coemail, co.prefix_code cocode')
+        ->select('co.id coid, cu.name cuname, cu.id cuid, co.name coname, co.phone cophone, co.email coemail, co.prefix_code cocode')
         ->join('company as co', 'co.customer = cu.id')
         ->where('co.deleted_at IS NULL')
         ->get()->getResultArray();

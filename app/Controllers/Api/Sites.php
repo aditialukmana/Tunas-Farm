@@ -48,13 +48,14 @@ class Sites extends ResourceController
 			];
 			return $this->respond($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
 	// create a product
 	public function create()
 	{
+		$kode = $this->request->getPost('code');
 		$name = $this->request->getPost('name');
 		$company = $this->request->getPost('company');
 		$type = $this->request->getPost('type');
@@ -73,7 +74,7 @@ class Sites extends ResourceController
 		$period = $this->request->getPost('rent_period');
 		$cost = $this->request->getPost('rent_cost');
 
-		$arr = explode(" ", $company);
+		$arr = explode(" ", $kode);
 		$skt = '';
 
 		foreach ($arr as $kata) {
@@ -116,7 +117,7 @@ class Sites extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -139,7 +140,7 @@ class Sites extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -161,7 +162,7 @@ class Sites extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

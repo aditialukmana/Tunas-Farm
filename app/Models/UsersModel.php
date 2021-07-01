@@ -12,6 +12,7 @@ class UsersModel extends Model
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
     protected $allowedFields = ['email', 'username', 'fullname', 'user_image', 'customer', 'password_hash', 'reset_hash', 'reset_at'];
+    protected $returnType = 'App\Entities\Users';
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
@@ -22,4 +23,11 @@ class UsersModel extends Model
         if ($id == false) return $this->findAll();
         return $this->where(['id' => $id])->first();
     }
+
+    public function get_data($username)
+	{
+      return $this->db->table('users')
+      ->where(array('username' => $username))
+      ->get()->getRowArray();
+	}
 }

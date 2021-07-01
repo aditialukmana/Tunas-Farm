@@ -4,9 +4,9 @@ $(document).ready(function () {
   tableUsers = $("#tableUsers").DataTable({
     ajax: urlUsers,
     columns: [
-      { data: "email", title: "Email" },
       { data: "username", title: "Username" },
-      { data: "fullname", title: "Full Name" },
+      { data: "fullname", title: "Fullname" },
+      { data: "email", title: "Email" },
       {
         data: (items) => {
           return (
@@ -17,21 +17,17 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions",
       },
     ],
   });
 
   $("#add_user").click(function () {
-    var formData = new FormData($("#create_User_form")[0]);
+    var formData = $("#create_User_form").serialize();
     $.ajax({
       url: urlUsers,
       type: "POST",
       data: formData,
-      async: false,
-      cache: false,
-      contentType: false,
-      processData: false,
       dataType: "json",
       success: function (data) {
         notifAddSuccess();

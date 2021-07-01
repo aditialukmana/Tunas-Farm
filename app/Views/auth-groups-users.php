@@ -113,5 +113,5 @@
   </div>
 </div>
 
-<script src="<?= base_url('js/roleusers.js'); ?>"></script>
+<script src="<?= base_url('public/js/roleusers.js'); ?>"></script>
 <?= $this->endSection() ?>

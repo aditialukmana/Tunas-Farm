@@ -33,7 +33,7 @@
                   <th>Image</th>
                   <th>Est Harvest Time</th>
                   <th>Est Weight</th>
-                  <th style="width:10%;">Action</th>
+                  <th style="width:10%;">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,5 +117,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/planttypes.js') ?>"></script>
+<script src="<?= base_url('public/js/planttypes.js') ?>"></script>
 <?= $this->endSection() ?>

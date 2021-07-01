@@ -23,8 +23,15 @@ class GrowInstallations extends ResourceController
 	// get all product
 	public function index()
 	{
-		$data = $this->model->getData();
-		return $this->respond(array('data'=>$data), 200);
+		$data = $this->model->joinData();
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -34,7 +41,7 @@ class GrowInstallations extends ResourceController
 		if ($data) {
 			return $this->respond($data);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
@@ -57,7 +64,7 @@ class GrowInstallations extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -80,7 +87,7 @@ class GrowInstallations extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -102,7 +109,7 @@ class GrowInstallations extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

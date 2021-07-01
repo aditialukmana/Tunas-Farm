@@ -1,10 +1,10 @@
 <?php
 
 
-function token($token, $user_id){
+function token($token){
 
     $param['token']   = $token;
-    $param['user_id']   = $user_id;
+    $param['user_id']   = 4;
 
     $TModel = new \App\Models\AuthTokensModel();
     

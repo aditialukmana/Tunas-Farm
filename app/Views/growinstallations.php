@@ -221,5 +221,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/growinstallations.js') ?>"></script>
+<script src="<?= base_url('public/js/growinstallations.js') ?>"></script>
 <?= $this->endSection() ?>

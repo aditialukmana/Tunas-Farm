@@ -149,5 +149,5 @@
   </div>
 </div>
 
-<script src="<?= base_url('js/actuatorsites.js') ?>"></script>
+<script src="<?= base_url('public/js/actuatorsites.js') ?>"></script>
 <?= $this->endSection() ?>

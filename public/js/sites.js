@@ -1,5 +1,5 @@
 var urlSites = $("#tableSites").data("url");
-var url = "http://localhost:8080/public/image_site/";
+var url = "http://localhost/tunasdash/public/image_site/";
 // Tampil data Sites
 $(document).ready(function () {
   var tableSites = $("#tableSites").DataTable({
@@ -147,7 +147,7 @@ $(document).ready(function () {
 
   // Tampil data Company
   $.ajax({
-    url: "http://localhost:8080/api/companies/",
+    url: "http://localhost/tunasdash/api/companies/",
     type: "get",
     async: true,
     dataType: "json",
@@ -248,17 +248,8 @@ $(document).ready(function () {
     }
   });
   $("#company").change(function () {
-    var com = $("#company option:selected").val();
-    $.ajax({
-      url: "http://localhost:8080/api/companies/" + com,
-      type: "GET",
-      async: true,
-      dataType: "json",
-      success: function (data) {
-        console.log(data.data.name);
-        $("#code").attr("value", data.data.name);
-      },
-    });
+    var com = $("#company option:selected").text();
+    $("#code").attr("value", com);
   });
   $("#building_status").change(function () {
     if ($("#building_status").val() == "rent") {

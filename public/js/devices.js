@@ -3,17 +3,17 @@ $(document).ready(function () {
   var tableDevices = $("#tableDevices").DataTable({
     ajax: urlDevices,
     columns: [
-      { data: "code", title: "Code" },
-      { data: "site", title: "Site" },
-      { data: "grow_installation", title: "Grow Installation" },
+      { data: "decode", title: "Code" },
+      { data: "sename", title: "Site" },
+      { data: "grcode", title: "Grow Installation" },
       {
-        data: "status",
+        data: "destatus",
         title: "Status",
         render: function (data, type, row) {
-          if (row["status"] === "active") {
-            return '<p class="btn btn-primary">' + row["status"] + "</p>";
-          } else if (row["status"] === "inactive") {
-            return '<p class="btn btn-secondary">' + row["status"] + "</p>";
+          if (row["destatus"] === "active") {
+            return '<p class="btn btn-primary">' + row["destatus"] + "</p>";
+          } else if (row["destatus"] === "inactive") {
+            return '<p class="btn btn-secondary">' + row["destatus"] + "</p>";
           }
         },
       },
@@ -21,9 +21,9 @@ $(document).ready(function () {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-device" title="Edit" data-id="' +
-            items.id +
+            items.deid +
             '" data-toggle="modal" data-target="#modal_edit"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-device" title="Delete" data-id="' +
-            items.id +
+            items.deid +
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
@@ -32,10 +32,16 @@ $(document).ready(function () {
     ],
   });
 
-  $("#site").change(function () {
-    var site = $("#site").find(":selected").val();
+$("#site").change(function () {
+    var site = $("#site").find(":selected").text();
     var code = $("#code").val();
     $("#code").attr("value", code+"-"+site);
+  });
+
+  $("#site_edit").change(function () {
+    var site_edit = $("#site_edit").find(":selected").text();
+    var code_edit = $("#code_edit").val();
+    $("#code_edit").attr("value", code_edit+"-"+site_edit);
   });
 
   $("#add_device").click(function () {
@@ -56,7 +62,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/sites/",
+    url: "http://localhost/tunasdash/api/sites/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -65,16 +71,16 @@ $(document).ready(function () {
       for (i; i <= data.data.length; i++) {
         $("#site").append(
           "<option value='" +
-            data.data[i].id +
+            data.data[i].seid +
             "'>" +
-            data.data[i].name +
+            data.data[i].sename +
             "</option>"
         );
         $("#site_edit").append(
           "<option value='" +
-            data.data[i].id +
+            data.data[i].seid +
             "'>" +
-            data.data[i].name +
+            data.data[i].sename +
             "</option>"
         );
       }
@@ -82,7 +88,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/growinstallations/",
+    url: "http://localhost/tunasdash/api/growinstallations/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -91,16 +97,16 @@ $(document).ready(function () {
       for (i; i <= data.data.length; i++) {
         $("#grow_installation").append(
           "<option value='" +
-            data.data[i].id +
+            data.data[i].grid +
             "'>" +
-            data.data[i].code +
+            data.data[i].grcode +
             "</option>"
         );
         $("#grow_installation_edit").append(
           "<option value='" +
-            data.data[i].id +
+            data.data[i].grid +
             "'>" +
-            data.data[i].code +
+            data.data[i].grcode +
             "</option>"
         );
       }
@@ -117,16 +123,16 @@ $(document).ready(function () {
       async: true,
       dataType: "json",
       success: function (data) {
-        $("#edit_id").attr("value", data.id); 
-        $("#site_edit option[value='" + data.site + "']").attr(
+        $("#edit_id").attr("value", data.data.id); 
+        $("#site_edit option[value='" + data.data.site + "']").attr(
           "selected",
           "selected"
         );
-        $("#grow_installation_edit option[value='" + data.grow_installation + "']").attr(
+        $("#grow_installation_edit option[value='" + data.data.grow_installation + "']").attr(
           "selected",
           "selected"
         );
-        $("#status_edit option[value='" + data.status + "']").attr(
+        $("#status_edit option[value='" + data.data.status + "']").attr(
           "selected",
           "selected"
         );

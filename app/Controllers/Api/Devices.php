@@ -24,7 +24,8 @@ class Devices extends ResourceController
 	// get all product
 	public function index()
 	{
-		$data = $this->model->getData();
+		$data = $this->model->joinData();
+
 		$response = [
 			'status'   => 200,
 			'messages' => [
@@ -49,7 +50,7 @@ class Devices extends ResourceController
 			];
 			return $this->respond($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
@@ -71,7 +72,7 @@ class Devices extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -94,7 +95,7 @@ class Devices extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -116,7 +117,7 @@ class Devices extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

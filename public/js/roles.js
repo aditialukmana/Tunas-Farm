@@ -16,7 +16,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions",
       },
     ],
   });

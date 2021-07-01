@@ -23,7 +23,7 @@
                        
                     <?= view('Myth\Auth\Views\_message_block') ?>
 
-                                    <form class="user" action="<?= route_to('register') ?>" method="post">
+                                    <form class="user" action="<?= route_to('tunasdash/register') ?>" method="post">
                                         <?= csrf_field() ?>
 
                                         <div class="form-group">

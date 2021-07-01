@@ -669,20 +669,20 @@ $(document).ready(function() {
     type            = type.split('/');
     type            = type[type.length-3];
 
-    var pageDataPO = [
-      base_url()+'/admin',
-      base_url()+'/admin/order_list',
-      base_url()+'/admin/po/accepted'
-    ];
+    // var pageDataPO = [
+    //   base_url()+'/admin',
+    //   base_url()+'/admin/order_list',
+    //   base_url()+'/admin/po/accepted'
+    // ];
 
     var urlDataPODetail = [
       'po_detail',
     ];
 
     // console.log(pageDataPO,window.location.href,pageDataPO.includes(window.location.href));
-    if(pageDataPO.includes(window.location.href)) {
-      dataPO();
-    }
+    // if(pageDataPO.includes(window.location.href)) {
+    //   dataPO();
+    // }
 
     if(urlDataPODetail.includes(type)) {
       dataPODetailPage();

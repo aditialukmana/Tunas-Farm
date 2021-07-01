@@ -73,6 +73,7 @@
           <div class="form-group mb-3">
             <label for="code" class="control-label">Tower & Level</label>
             <select name="tower_level" id="tower_level" class="form-control">
+            <option>Choose...</option>
             </select>
           </div>
           <div class="form-group mb-3">

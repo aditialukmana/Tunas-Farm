@@ -53,7 +53,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/transplanting/" + id,
+      url: "http://localhost/tunasdash/api/transplanting/" + id,
       type: "PUT",
       data: { sisa: sisa_trans },
       dataType: "json",
@@ -62,7 +62,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/transplanting/",
+    url: "http://localhost/tunasdash/api/transplanting/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -110,20 +110,20 @@ $(document).ready(function () {
       async: true,
       dataType: "json",
       success: function (data) {
-        $("#edit_id").attr("value", data.data.id);
+        $("#edit_id").attr("value", data.id);
         $(
-          "#transplanting_edit option[value='" + data.data.transplanting + "']"
+          "#transplanting_edit option[value='" + data.transplanting + "']"
         ).attr("selected", "selected");
-        $("#terproses_edit").attr("value", data.data.terproses);
-        $("#sisa_edit").attr("value", data.data.sisa);
-        $("#status_edit option[value='" + data.data.status + "']").attr(
+        $("#terproses_edit").attr("value", data.terproses);
+        $("#sisa_edit").attr("value", data.sisa);
+        $("#status_edit option[value='" + data.status + "']").attr(
           "selected",
           "selected"
         );
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/transplanting/",
+      url: "http://localhost/tunasdash/api/transplanting/",
       type: "GET",
       async: true,
       dataType: "json",
@@ -158,7 +158,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/transplanting/" + id,
+      url: "http://localhost/tunasdash/api/transplanting/" + id,
       type: "PUT",
       data: { sisa: sisa_trans },
       dataType: "json",
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
   $("#transplanting").change(function () {
     $.ajax({
-      url: "http://localhost:8080/api/transplanting/",
+      url: "http://localhost/tunasdash/api/transplanting/",
       type: "GET",
       async: true,
       dataType: "json",
@@ -214,12 +214,12 @@ $(document).ready(function () {
         }
         var id_tanaman = $("#id_tanaman").val();
         $.ajax({
-          url: "http://localhost:8080/api/planttypes/" + id_tanaman,
+          url: "http://localhost/tunasdash/api/planttypes/" + id_tanaman,
           type: "GET",
           async: true,
           dataType: "json",
           success: function (data) {
-            var codeTrans = $("#code").val() + "-" + data.name;
+            var codeTrans = $("#code").val() + "-" + data.data.name;
             $("#code").attr("value", codeTrans);
           },
         });

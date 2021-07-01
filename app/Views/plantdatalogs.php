@@ -175,5 +175,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/plantdatalogs.js') ?>"></script>
+<script src="<?= base_url('public/js/plantdatalogs.js') ?>"></script>
 <?= $this->endSection() ?>

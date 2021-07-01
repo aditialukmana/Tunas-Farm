@@ -183,5 +183,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/grooming.js') ?>"></script>
+<script src="<?= base_url('public/js/grooming.js') ?>"></script>
 <?= $this->endSection() ?>

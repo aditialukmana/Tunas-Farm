@@ -54,7 +54,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/grooming/" + id,
+      url: "http://localhost/tunasdash/api/grooming/" + id,
       type: "PUT",
       data: { sisa: sisa_groom },
       dataType: "json",
@@ -63,7 +63,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/grooming/",
+    url: "http://localhost/tunasdash/api/grooming/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -71,30 +71,30 @@ $(document).ready(function () {
       for (var i = 0; i < data.data.length; i++) {
         $("#grooming").append(
           "<option value='" +
-            data.data[i].code +
+            data.data[i].grcode +
             "'>" +
-            data.data[i].code +
+            data.data[i].grcode +
             "</option>"
         );
         $("#tower_level").append(
           "<option value='" +
-            data.data[i].tower_level +
+            data.data[i].grtwrlvl +
             "'>" +
-            data.data[i].tower_level +
+            data.data[i].grtwrlvl +
             "</option>"
         );
         $("#grooming_edit").append(
           "<option value='" +
-            data.data[i].code +
+            data.data[i].grcode +
             "'>" +
-            data.data[i].code +
+            data.data[i].grcode +
             "</option>"
         );
         $("#tower_level_edit").append(
           "<option value='" +
-            data.data[i].tower_level +
+            data.data[i].grtwrlvl +
             "'>" +
-            data.data[i].tower_level +
+            data.data[i].grtwrlvl +
             "</option>"
         );
       }
@@ -129,15 +129,15 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/grooming/",
+      url: "http://localhost/tunasdash/api/grooming/",
       type: "GET",
       async: true,
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (data.data[i].code == $("#grooming_edit").val()) {
-            $("#id_groom").attr("value", data.data[i].id);
-            $("#jumlah_groom").attr("value", data.data[i].terproses);
+          if (data.data[i].grcode == $("#grooming_edit").val()) {
+            $("#id_groom").attr("value", data.data[i].grid);
+            $("#jumlah_groom").attr("value", data.data[i].grterproses);
           }
         }
       },
@@ -164,7 +164,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/grooming/" + id,
+      url: "http://localhost/tunasdash/api/grooming/" + id,
       type: "PUT",
       data: { sisa: sisa_groom },
       dataType: "json",
@@ -206,17 +206,17 @@ $(document).ready(function () {
 
   $("#grooming").change(function () {
     $.ajax({
-      url: "http://localhost:8080/api/grooming/",
+      url: "http://localhost/tunasdash/api/grooming/",
       type: "GET",
       async: true,
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (data.data[i].code == $("#grooming").val()) {
-            $("#id_groom").attr("value", data.data[i].id);
-            $("#jumlah_groom").attr("value", data.data[i].terproses);
-            $("#id_tanaman").attr("value", data.data[i].id_tanaman);
-            $("#tower_level option[value='" + data.building_area + "']").attr(
+          if (data.data[i].grcode == $("#grooming").val()) {
+            $("#id_groom").attr("value", data.data[i].grid);
+            $("#jumlah_groom").attr("value", data.data[i].grterproses);
+            $("#id_tanaman").attr("value", data.data[i].grtanaman);
+            $("#tower_level option[value='" + data.data[i].grtwrlvl + "']").attr(
               "selected",
               "selected"
             );
@@ -224,12 +224,12 @@ $(document).ready(function () {
         }
         var id_tanaman = $("#id_tanaman").val();
         $.ajax({
-          url: "http://localhost:8080/api/planttypes/" + id_tanaman,
+          url: "http://localhost/tunasdash/api/planttypes/" + id_tanaman,
           type: "GET",
           async: true,
           dataType: "json",
           success: function (data) {
-            var codeTrans = $("#code").val() + "-" + data.name;
+            var codeTrans = $("#code").val() + "-" + data.data.name;
             $("#code").attr("value", codeTrans);
           },
         });

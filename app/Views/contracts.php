@@ -170,5 +170,5 @@
 </div>
 
 
-<script src="<?= base_url('js/contracts.js') ?>"></script>
+<script src="<?= base_url('public/js/contracts.js') ?>"></script>
 <?= $this->endSection() ?>

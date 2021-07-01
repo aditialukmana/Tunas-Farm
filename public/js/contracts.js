@@ -137,7 +137,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/companies/",
+    url: "http://localhost/tunasdash/api/companies/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -163,7 +163,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/sites/",
+    url: "http://localhost/tunasdash/api/sites/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -184,7 +184,7 @@ $(document).ready(function () {
   $("#company").change(function () {
     var com = $("#company option:selected").val();
     $.ajax({
-      url: "http://localhost:8080/api/sites/",
+      url: "http://localhost/tunasdash/api/sites/",
       type: "GET",
       async: true,
       dataType: "json",

@@ -120,15 +120,15 @@
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Seedling</label>
-            <input type="number" id="seedling_edit" name="seedling" class="form-control" autocomplete="off" placeholder="Jumlah yang akan di seedling">
+            <input type="number" id="seedling_edit" name="seedling" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Sisa</label>
-            <input type="text" id="sisa_edit" name="sisa" class="form-control" autocomplete="off" placeholder="Jumlah yang akan di seedling">
+            <input type="text" id="sisa_edit" name="sisa" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="releaseName" class="control-label">Reject</label>
-            <input type="text" id="reject_edit" name="reject" class="form-control" autocomplete="off" placeholder="Jumlah yang akan di seedling">
+            <input type="text" id="reject_edit" name="reject" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Status</label>
@@ -167,5 +167,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/seedling.js') ?>"></script>
+<script src="<?= base_url('public/js/seedling.js') ?>"></script>
 <?= $this->endSection() ?>

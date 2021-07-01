@@ -158,5 +158,5 @@
       </div>
     </div>
   </div>
-  <script src="<?= base_url('js/customers.js') ?>"></script>
+  <script src="<?= base_url('public/js/customers.js') ?>"></script>
   <?= $this->endSection() ?>

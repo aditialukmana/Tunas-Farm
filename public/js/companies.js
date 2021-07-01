@@ -147,7 +147,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $.ajax({
-    url: "http://localhost:8080/api/customers/",
+    url: "http://localhost/tunasdash/api/customers/",
     type: "GET",
     async: true,
     dataType: "json",

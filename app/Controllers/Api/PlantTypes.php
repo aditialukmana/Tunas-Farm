@@ -25,23 +25,13 @@ class PlantTypes extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
-		if($data) {
-			$response = [
-				'status'   => 200,
-				'messages' => [
-					'success' => 'Get All Data'
-				],
-				'data'			=> $data
-			];
-		} else {
-			$response = [
-				'status'   => 400,
-				'messages' => [
-					'success' => 'Fail Get All Data'
-				],
-				'data'			=> $data
-			];
-		}
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
 		return $this->respond($response, 200);
 	}
 
@@ -128,13 +118,6 @@ class PlantTypes extends ResourceController
 				'est_weight' => $input['est_weight']
 			];
 		}
-		// $this->validation->run($data, 'plant_type_update');
-		// $errors = $this->validation->getErrors();
-
-		// if ($errors) {
-		// 	log_message('error', implode(",", array_values($errors)));
-		// 	return $this->fail($errors);
-		// }
 
 		if ($data) {
 			$this->model->update($id, $data);
@@ -172,7 +155,7 @@ class PlantTypes extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

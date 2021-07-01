@@ -103,5 +103,5 @@
   </div>
 </div>
 
-<script src="<?= base_url('js/roles.js'); ?>"></script>
+<script src="<?= base_url('public/js/roles.js'); ?>"></script>
 <?= $this->endSection() ?>

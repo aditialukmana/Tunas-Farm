@@ -41,5 +41,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/systemlogs.js') ?>"></script>
+<script src="<?= base_url('public/js/systemlogs.js') ?>"></script>
 <?= $this->endSection() ?>

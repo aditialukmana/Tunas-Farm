@@ -27,10 +27,11 @@ class GrowInstallationsModel extends Model
 
     public function joinData()
     {
-        return $this->db->table('contracts as con')
-            ->select('con.id conid, co.name coname, se.name sename, con.start_period constart, con.end_period conend, con.contract_commitment concom, con.partnership_objective conpart')
-            ->join('company as co', 'con.company = co.id')
-            ->join('sites as se', 'con.site = se.id')
+        return $this->db->table('grow_installations as gr')
+            ->select('gr.id grid, gr.code grcode, cu.id cuid, cu.name cuname, co.id coid, co.name coname, se.id seid, se.name sename, gr.type grtype, gr.status grstatus')
+            ->join('customers as cu', 'gr.customer = cu.id')
+            ->join('company as co', 'gr.company = co.id')
+            ->join('sites as se', 'gr.site = se.id')
             ->get()->getResultArray();
     }
 }

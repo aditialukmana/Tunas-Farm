@@ -173,5 +173,5 @@
   </div>
 </div>
 
-<script src="<?= base_url('js/actuatordevices.js') ?>"></script>
+<script src="<?= base_url('public/js/actuatordevices.js') ?>"></script>
 <?= $this->endSection() ?>

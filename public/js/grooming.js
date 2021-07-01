@@ -1,4 +1,4 @@
-var urlGrooming = $("#tableGrooming").data("url");
+ var urlGrooming = $("#tableGrooming").data("url");
 var tableGrooming = null;
 $(document).ready(function () {
   tableGrooming = $("#tableGrooming").DataTable({
@@ -47,7 +47,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/seedling/" + id,
+      url: "http://localhost/tunasdash/api/seedling/" + id,
       type: "PUT",
       data: { sisa: sisa_seed },
       dataType: "json",
@@ -83,7 +83,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/seedling/",
+      url: "http://localhost/tunasdash/api/seedling/",
       type: "GET",
       async: true,
       dataType: "json",
@@ -118,7 +118,7 @@ $(document).ready(function () {
       },
     });
     $.ajax({
-      url: "http://localhost:8080/api/seedling/" + id,
+      url: "http://localhost/tunasdash/api/seedling/" + id,
       type: "PUT",
       data: { sisa: sisa_seed },
       dataType: "json",
@@ -159,7 +159,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/seedling/",
+    url: "http://localhost/tunasdash/api/seedling/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -185,7 +185,7 @@ $(document).ready(function () {
 
   $("#seedling").change(function () {
     $.ajax({
-      url: "http://localhost:8080/api/seedling/",
+      url: "http://localhost/tunasdash/api/seedling/",
       type: "GET",
       async: true,
       dataType: "json",
@@ -199,7 +199,7 @@ $(document).ready(function () {
         }
         var id_tanaman = $("#id_tanaman").val();
         $.ajax({
-          url: "http://localhost:8080/api/planttypes/" + id_tanaman,
+          url: "http://localhost/tunasdash/api/planttypes/" + id_tanaman,
           type: "GET",
           async: true,
           dataType: "json",

@@ -164,5 +164,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/harvesting.js') ?>"></script>
+<script src="<?= base_url('public/js/harvesting.js') ?>"></script>
 <?= $this->endSection() ?>

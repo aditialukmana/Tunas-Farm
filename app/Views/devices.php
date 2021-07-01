@@ -111,6 +111,14 @@
           </button>
         </div>
         <div class="modal-body">
+        <?php $kode = rand(1, 100);
+            if ($kode <= 10) {
+              $codeDevice = "DS0" . $kode;
+            } else {
+              $codeDevice = "DS" . $kode;
+            }
+            echo "<input type='hidden' name='code' id='code_edit' value='" . $codeDevice . "'>"
+            ?>
         <input type="number" name="id" id="edit_id" hidden>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Site</label>
@@ -158,5 +166,5 @@
     </div>
   </div>
 </div>
-<script src="<?= base_url('js/devices.js') ?>"></script>
+<script src="<?= base_url('public/js/devices.js') ?>"></script>
 <?= $this->endSection() ?>

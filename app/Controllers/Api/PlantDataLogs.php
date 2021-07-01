@@ -24,7 +24,25 @@ class PlantDataLogs extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
-		return $this->respond(array('data'=>$data), 200);
+		if($data) {
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get All Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
+		} else {
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Fail Get All Data'
+				],
+				'data'			=> []
+			];
+			return $this->respond($response, 400);
+		}
 	}
 
 	// get single product
@@ -34,22 +52,14 @@ class PlantDataLogs extends ResourceController
 		if ($data) {
 			return $this->respond($data);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
 	// create a product
 	public function create()
 	{
-		$image = $this->request->getFile('image');
-		$image->move(ROOTPATH . 'public/uploads');
-		$data = [
-			'name' => $this->request->getPost('name'),
-			'image' =>	$image,
-			'code' => $this->request->getPost('code'),
-			'est_harvest_time' => $this->request->getPost('est_harvest_time'),
-			'est_weight' => $this->request->getPost('est_weight'),
-		];
+		$data = $this->request->getPost();
 
 		if ($data) {
 			$this->model->save($data);
@@ -65,7 +75,7 @@ class PlantDataLogs extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -88,7 +98,7 @@ class PlantDataLogs extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -110,7 +120,7 @@ class PlantDataLogs extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

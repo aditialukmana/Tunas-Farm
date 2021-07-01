@@ -16,7 +16,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions",
       },
     ],
   });
@@ -112,7 +112,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/authgroups/",
+    url: "http://localhost/tunasdash/api/authgroups/",
     type: "get",
     async: true,
     dataType: "json",
@@ -137,7 +137,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/users/",
+    url: "http://localhost/tunasdash/api/users/",
     type: "get",
     async: true,
     dataType: "json",

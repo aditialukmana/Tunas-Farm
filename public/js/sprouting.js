@@ -1,5 +1,6 @@
 var urlSprouting = $("#tableSprouting").data("url");
 var tableSprouting = null;
+console.log(urlSprouting);
 $(document).ready(function () {
   tableSprouting = $("#tableSprouting").DataTable({
     ajax: urlSprouting,
@@ -129,7 +130,7 @@ $(document).ready(function () {
   });
 
   $.ajax({
-    url: "http://localhost:8080/api/planttypes/",
+    url: "http://localhost/tunasdash/api/planttypes/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -158,7 +159,7 @@ $(document).ready(function () {
     var kodeSprout = $("#code").val() + "-" + tanaman;
     $("#code").attr("value", kodeSprout);
     $.ajax({
-      url: "http://localhost:8080/api/planttypes/",
+      url: "http://localhost/tunasdash/api/planttypes/",
       type: "GET",
       async: true,
       dataType: "json",

@@ -6,25 +6,25 @@ $(document).ready(function () {
   tableGrow = $("#tableGrow").DataTable({
     ajax: urlGrow,
     columns: [
-      { data: "code", title: "Code" },
-      { data: "customer", title: "Customer" },
-      { data: "company", title: "Company" },
-      { data: "type", title: "Type" },
-      { data: "site", title: "Site" },
+      { data: "grcode", title: "Code" },
+      { data: "cuname", title: "Customer" },
+      { data: "coname", title: "Company" },
+      { data: "grtype", title: "Type" },
+      { data: "sename", title: "Site" },
       {
-        data: "status",
+        data: "grstatus",
         title: "Status",
         render: function (data, type, row) {
-          if (row["status"] === "active") {
+          if (row["grstatus"] === "active") {
             return (
               '<p class="btn btn-primary">' +
-              row["status"] +
+              row["grstatus"] +
               "</p>"
             );
-          } else if (row["status"] === "inactive") {
+          } else if (row["grstatus"] === "inactive") {
             return (
               '<p class="btn btn-secondary">' +
-              row["status"] +
+              row["grstatus"] +
               "</p>"
             );
           }
@@ -34,11 +34,11 @@ $(document).ready(function () {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 detail-grow" title="Details" data-id="' +
-            items.id +
-            '" data-toggle="modal" data-target="#detailModal"><span class="sr-only">Details</span> <i class="fa fa-info"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 edit-grow" title="Edit" data-id="' +
-            items.id +
+            items.grid +
+            '" data-toggle="modal" data-target="#detailModal"><span class="sr-only">Details</span> <i class="fa fa-info"></i></a> <a href="javascript:voigrid0);" class="btn btn-default mb-2 edit-grow" title="Edit" data-id="' +
+            items.grid +
             '" data-toggle="modal" data-target="#modal_update"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-grow" title="Delete" data-id="' +
-            items.id +
+            items.grid +
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
@@ -213,7 +213,7 @@ $(document).ready(function () {
     });
   });
   $.ajax({
-    url: "http://localhost:8080/api/companies/",
+    url: "http://localhost/tunasdash/api/companies/",
     type: "GET",
     async: true,
     dataType: "json",
@@ -222,9 +222,9 @@ $(document).ready(function () {
       for (i; i <= data.data.length; i++) {
         $("#company_edit").append(
           "<option value='" +
-            data.data[i].id +
+            data.data[i].coid +
             "'>" +
-            data.data[i].name +
+            data.data[i].coname +
             "</option>"
         );
       }
@@ -241,7 +241,7 @@ $(document).ready(function () {
 // Tampil data Customer
 $(document).ready(function () {
   $.ajax({
-    url: "http://localhost:8080/api/customers",
+    url: "http://localhost/tunasdash/api/customers",
     type: "get",
     async: true,
     dataType: "json",
@@ -271,18 +271,18 @@ $(document).ready(function () {
   $("select").change(function () {
     var customer = $("#customer").find(":selected").val();
     $.ajax({
-      url: "http://localhost:8080/api/companies/",
+      url: "http://localhost/tunasdash/api/companies/",
       type: "get",
       async: true,
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (customer == data.data[i].customer) {
+          if (customer == data.data[i].cuid) {
             $("#company").append(
               "<option value='" +
-                data.data[i].id +
+                data.data[i].coid +
                 "'>" +
-                data.data[i].name +
+                data.data[i].coname +
                 "</option>"
             );
           }
@@ -297,18 +297,18 @@ $(document).ready(function () {
   $("select").change(function () {
     var company = $("#company").find(":selected").val();
     $.ajax({
-      url: "http://localhost:8080/api/sites/",
+      url: "http://localhost/tunasdash/api/sites/",
       type: "get",
       async: true,
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (company == data.data[i].company) {
+          if (company == data.data[i].coid) {
             $("#site").append(
               "<option value='" +
-                data.data[i].id +
+                data.data[i].seid +
                 "'>" +
-                data.data[i].name +
+                data.data[i].sename +
                 "</option>"
             );
           }
@@ -345,7 +345,7 @@ $(document).ready(function () {
   $("select").change(function () {
     var sites = $("#sites").find(":selected").val();
     $.ajax({
-      url: "http://localhost:8080/api/sites/",
+      url: "http://localhost/tunasdash/api/sites/",
       type: "get",
       async: true,
       dataType: "json",

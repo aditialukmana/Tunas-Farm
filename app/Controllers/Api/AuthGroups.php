@@ -25,6 +25,7 @@ class AuthGroups extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
+
 		$response = [
 			'status'   => 200,
 			'messages' => [
@@ -49,7 +50,7 @@ class AuthGroups extends ResourceController
 			];
 			return $this->respond($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
@@ -57,7 +58,7 @@ class AuthGroups extends ResourceController
 	public function create()
 	{
 		$data = $this->request->getPost();
-	
+
 		if ($data) {
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Role';
@@ -72,7 +73,7 @@ class AuthGroups extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -95,7 +96,7 @@ class AuthGroups extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -103,11 +104,11 @@ class AuthGroups extends ResourceController
 	public function delete($id = null)
 	{
 		$data = $this->model->find($id);
-	
+
 		$this->model->delete($id);
-			$url = $this->request->uri->getSegment(2);
-			$message = 'Delete Role';
-			sys_log($url, $message);
+		$url = $this->request->uri->getSegment(2);
+		$message = 'Delete Role';
+		sys_log($url, $message);
 
 		if ($data) {
 			$this->model->delete($id);
@@ -123,7 +124,7 @@ class AuthGroups extends ResourceController
 			];
 			return $this->respondDeleted($response);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 }

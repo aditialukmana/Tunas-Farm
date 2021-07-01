@@ -24,14 +24,24 @@ class Customers extends ResourceController
 	public function index()
 	{
 		$data = $this->model->getData();
-		$response = [
-			'status'   => 200,
-			'messages' => [
-				'success' => 'Get All Data'
-			],
-			'data'			=> $data
-		];
-		return $this->respond($response, 200);
+		if($data) {
+			$response = [
+				'status'   => 200,
+				'messages' => [
+					'success' => 'Get All Data'
+				],
+				'data'			=> $data
+			];
+			return $this->respond($response, 200);
+		} else {
+			$response = [
+				'status'   => 400,
+				'messages' => [
+					'failed' => 'No Data'
+				]
+			];
+			return $this->respond($response, 400);
+		}
 	}
 
 	// get single product
@@ -48,7 +58,7 @@ class Customers extends ResourceController
 			];
 			return $this->respond($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
@@ -78,7 +88,7 @@ class Customers extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -108,7 +118,7 @@ class Customers extends ResourceController
 			];
 			return $this->respondUpdated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
@@ -130,7 +140,7 @@ class Customers extends ResourceController
 			];
 			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->failNotFound('No Data Found with id ' . $id);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
