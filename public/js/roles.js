@@ -22,15 +22,11 @@ $(document).ready(function () {
   });
 
   $("#add_role").click(function () {
-    var formData = new FormData($("#create_Role_form")[0]);
+    var formData = $("#create_Role_form").serialize();
     $.ajax({
       url: urlRoles,
       type: "POST",
       data: formData,
-      async: false,
-      cache: false,
-      contentType: false,
-      processData: false,
       dataType: "json",
       success: function (data) {
         notifAddSuccess();
@@ -50,9 +46,9 @@ $(document).ready(function () {
       async: true,
       dataType: "json",
       success: function (data) {
-        $("#edit_id").val(data.id);
-        $("#name_edit").val(data.name);
-        $("#description_edit").text(data.description);
+        $("#edit_id").val(data.data.id);
+        $("#name_edit").val(data.data.name);
+        $("#description_edit").text(data.data.description);
       },
     });
   });

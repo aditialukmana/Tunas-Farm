@@ -25,11 +25,11 @@
         </div>
         <div class="body">
           <div class="table-responsive">
-            <table class="table table-hover table-custom spacing5" id="tableGrow" data-url="<?= base_url('api/growinstallations/'); ?>">
+            <table class="table table-hover table-custom spacing5" id="tablePrivilegeSettings" data-url="<?= base_url('api/privilegesettings'); ?>">
               <thead>
                 <tr>
                   <th>Roles</th>
-                  <th style="width: 10%;">Action</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -991,6 +991,7 @@
 </div>
 </div>
 <script src="<?= base_url('public/js/hummingbird-treeview.js'); ?>"></script>
+<script src="<?= base_url('public/js/privilegesettings.js'); ?>"></script>
 <script>
   $("#treeview").hummingbird();
 </script>

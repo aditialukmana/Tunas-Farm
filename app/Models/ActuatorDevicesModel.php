@@ -6,12 +6,12 @@ use CodeIgniter\Model;
 
 class ActuatorDevicesModel extends Model
 {
-    protected $table      = 'actuator_devices';
+    protected $table      = 'actuatordevices';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['site','floor', 'device','water', 'air', 'humidity', 'tds', 'ph'];
+    protected $allowedFields = ['site','floor', 'device','airtemperature', 'humidity', 'acstart', 'acend', 'lightstart', 'lightend'];
 
     // protected $returnType = 'App\Entities\PlantDataLogs';
 

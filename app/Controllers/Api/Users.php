@@ -18,6 +18,7 @@ class Users extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -56,22 +57,23 @@ class Users extends ResourceController
 	public function create()
 	{
 		$data = $this->request->getPost();
-		// $this->validation->run($data, 'user_create');
-		// $errors = $this->validation->getErrors();
+		$this->validation->run($data, 'user_create');
+		$errors = $this->validation->getErrors();
 
-		// if ($errors) {
-		// 	log_message('error', implode(",", array_values($errors)));
-		// 	return $this->fail($errors);
-		// }
+		if ($errors) {
+			log_message('error', implode(",", array_values($errors)));
+			return $this->fail($errors);
+		}
 
 		$user = new \App\Entities\Users();
 		$user->fill($data);
 		$user->setPassword($data['password_hash']);
 
 		if ($user) {
+			$username = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create User';
-			sys_log($url, $message);
+			sys_log($username, $url, $message);
 			$this->model->save($user);
 			$response = [
 				'status'   => 201,
@@ -90,10 +92,31 @@ class Users extends ResourceController
 	public function update($id = null)
 	{
 		$data = $this->request->getRawInput();
+		$user = user()->username;
+		$url = $this->request->uri->getSegment(2);
+		if (isset($data['password_hash'])) {
+			$user_pass = new \App\Entities\Users();
+			$user_pass->fill($data);
+			$user_pass->setPassword($data['password_hash']);
+			if ($user_pass) {
+				$message_pass = 'Update Password';
+				sys_log($user, $url, $message_pass);
+				$this->model->update($id, $user_pass);
+				$response = [
+					'status'   => 201,
+					'messages' => [
+						'success' => 'Data Saved'
+					],
+					'data'			=> $user_pass
+				];
+				return $this->respondUpdated($response, 201);
+			} else {
+				return $this->fail("Fail to save", 400);
+			}
+		}
 		if ($data) {
-			$url = $this->request->uri->getSegment(2);
 			$message = 'Update User';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$this->model->update($id, $data);
 			$response = [
 				'status'   => 201,
@@ -114,9 +137,10 @@ class Users extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete User';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

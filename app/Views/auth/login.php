@@ -22,7 +22,7 @@
 
 
                     <?= view('Myth\Auth\Views\_message_block') ?>
-                    <form class="user" action="<?= route_to('tunasdash') ?>" method="post">
+                    <form class="user" action="<?= route_to('tunasdash/') ?>" method="post">
                         <?= csrf_field(); ?>
 
                         <?php if ($config->validFields === ['email']) : ?>
@@ -57,7 +57,9 @@
                         </button>
                     </form>
                     <hr>
-
+                    <?php if ($config->allowRegistration) : ?>
+                        <p><a href="<?= base_url('register') ?>"><?= lang('Auth.needAnAccount') ?></a></p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Api;
 
+use App\Models\AuthTokensModel;
 use Myth\Auth\Controllers\AuthController;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
@@ -19,6 +20,7 @@ class PlantTypes extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all data
@@ -74,19 +76,20 @@ class PlantTypes extends ResourceController
 			'est_harvest_time'	=> $harvest,
 			'est_weight'		=> $weight
 		];
-		// $this->validation->run($data, 'plant_type_create');
-		// $errors = $this->validation->getErrors();
+		$this->validation->run($data, 'plant_type_create');
+		$errors = $this->validation->getErrors();
 
-		// if ($errors) {
-		// 	log_message('error', implode(",", array_values($errors)));
-		// 	return $this->fail($errors);
-		// }
+		if ($errors) {
+			log_message('error', implode(",", array_values($errors)));
+			return $this->fail($errors);
+		}
 
 		if ($this->model->save($data)) {
 			$image->move(ROOTPATH . 'public/uploads/', $image_name);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Plant Type';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -110,6 +113,7 @@ class PlantTypes extends ResourceController
 				'est_harvest_time' => $json->est_harvest_time,
 				'est_weight' => $json->est_weight
 			];
+			$user_id = $json->user_id;
 		} else {
 			$input = $this->request->getRawInput();
 			$data = [
@@ -118,12 +122,14 @@ class PlantTypes extends ResourceController
 				'est_weight' => $input['est_weight']
 			];
 		}
-
+		// $tokenModel = new AuthTokensModel();
+		// $userid = $tokenModel->where('user_id', $user_id)->first();
 		if ($data) {
 			$this->model->update($id, $data);
-			$url = $this->request->uri->getSegment(2);
-			$message = 'Update Plant Type';
-			sys_log($url, $message);
+			// $user = user()->username;
+			// $url = $this->request->uri->getSegment(2);
+			// $message = 'Update Plant Type';
+			// sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -132,9 +138,10 @@ class PlantTypes extends ResourceController
 				'data'			=> $data
 			];
 			return $this->respondUpdated($response, 201);
-		} else {
-			return $this->fail("Fail to save");
 		}
+		// } else {
+		// 	return $this->fail("Fail to save");
+		// }
 	}
 
 	// delete data
@@ -143,9 +150,10 @@ class PlantTypes extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Plant Type';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

@@ -190,7 +190,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         for (var i = 0; i <= data.data.length; i++) {
-          if (data.data[i].seid == com) {
+          if (data.data[i].coid == com) {
             $("#site").append(
               "<option value='" +
                 data.data[i].seid +

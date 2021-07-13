@@ -42,12 +42,12 @@ class Validation
 	// Rules
 	//--------------------------------------------------------------------
 
-	// public $user_create    = [
-	// 	'username'    		=> 'required|alpha_numeric_space|min_length[3]|is_unique[users.username]',
-	// 	'email'        		=> 'required|valid_email|is_unique[users.email]',
-	// 	'phone'					=> 'required|min_length[11]|is_unique[users.phone]',
-	// 	'password'     		=> 'required|min_length[8]',
-	// ];
+	public $user_create    = [
+		'username'    		=> 'required|is_unique[users.username]',
+		'email'        		=> 'required|valid_email|is_unique[users.email]',
+		'fullname'			=> 'required',
+		'password_hash'    	=> 'required',
+	];
 
 	// public $user_update    = [
 	// 	'username'     		=> 'required|alpha_numeric_space|min_length[3]',
@@ -56,28 +56,12 @@ class Validation
 	// 	'password'     		=> 'required|min_length[8]',
 	// ];
 
-	// public $plant_type_create    = [
-	// 	'name'				=> 'required',
-	// 	'image'				=> 'uploaded[image]|max_size[image,2048]|is_image[image]',
-	// 	'est_harvest_time'	=> 'required',
-	// 	'est_weight'		=> 'required',
-	// ];
-
-	// public $plant_type_update    = [
-	// 	'name'				=> 'required',
-	// 	'est_harvest_time'	=> 'required',
-	// 	'est_weight'		=> 'required',
-	// ];
-
-	// public $role_create    = [
-	// 	'code'				=> 'required|min_length[3]|is_unique[roles.code]',
-	// 	'name'				=> 'required'
-	// ];
-
-	// public $role_update    = [
-	// 	'code'     		 	=> 'required|min_length[3]',
-	// 	'name'				=> 'required'
-	// ];
+	public $plant_type_create    = [
+		'name'				=> 'required',
+		'image'				=> 'uploaded[image]|max_size[image,2048]|is_image[image]',
+		'est_harvest_time'	=> 'required',
+		'est_weight'		=> 'required',
+	];
 
 	public $customers_create    = [
 		'name'				=> 'required',
@@ -191,11 +175,11 @@ class Validation
 		'id_tanaman'		=> 'required'
 	];
 
-	public $sprouting_update = [
-		'tipe_tanaman'		=> 'required',
-		'benih'				=> 'required',
-		'status'			=> 'required',
-	];
+	// public $sprouting_update = [
+	// 	'tipe_tanaman'		=> 'required',
+	// 	'benih'				=> 'required',
+	// 	'status'			=> 'required',
+	// ];
 
 	public $seedling_create = [
 		'code'				=> 'required',

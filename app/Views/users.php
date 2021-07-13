@@ -56,24 +56,33 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="modal-body">
-            <div class="form-group mb-3">
-              <label for="code" class="control-label">Email</label>
-              <input type="text" id="email" name="email" class="form-control" autocomplete="off">
-            </div>
-            <div class="form-group mb-3">
-              <label for="releaseName" class="control-label">Username</label>
-              <input type="text" id="username" name="username" class="form-control" autocomplete="off">
-            </div>
-            <div class="form-group mb-3">
-              <label for="releaseName" class="control-label">Fullname</label>
-              <input type="text" id="fullname" name="fullname" class="form-control" autocomplete="off">
-            </div>
-            <div class="form-group mb-3">
-              <label for="releaseName" class="control-label">Password</label>
-              <input type="password" id="password" name="password" class="form-control" autocomplete="off">
-            </div>
+          <div class="form-group mb-3">
+            <label for="code" class="control-label">Email</label>
+            <input type="text" id="email" name="email" class="form-control" autocomplete="off">
           </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Username</label>
+            <input type="text" id="username" name="username" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Fullname</label>
+            <input type="text" id="fullname" name="fullname" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Customer</label>
+            <select name="customer" id="customer" class="form-control">
+              <option>Choose...</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Password</label>
+            <input type="password" id="password" name="password_hash" class="form-control" autocomplete="off">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-round btn-primary" id="add_user">Submit</button>
+        </div>
       </form>
     </div>
   </div>
@@ -82,27 +91,61 @@
 <div class="modal fade" id="modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form method="post" action="<?php echo base_url('backend/edit_Role'); ?>" id="edit_Role_form">
+      <form id="edit_User_form">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="code_ref" name="code_ref" class="form-control">
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Role ID</label>
-            <input type="text" id="code_edit" name="code" class="form-control" autocomplete="off" readonly>
+            <input type="number" name="id" id="edit_id" hidden>
+            <label for="code" class="control-label">Email</label>
+            <input type="text" id="email_edit" name="email" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
-            <label for="releaseName" class="control-label">Role Name</label>
-            <input type="text" id="name_edit" name="name" class="form-control" autocomplete="off">
+            <label for="releaseName" class="control-label">Username</label>
+            <input type="text" id="username_edit" name="username" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Fullname</label>
+            <input type="text" id="fullname_edit" name="fullname" class="form-control" autocomplete="off">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-round btn-primary">Submit</button>
+          <button type="button" class="btn btn-round btn-primary" id="edit_user">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="edit_Password_form">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <input type="number" name="id" id="edit_id_pass" hidden>
+            <label for="code" class="control-label">Password</label>
+            <input type="password" id="password_edit" name="password" class="form-control" autocomplete="off">
+          </div>
+          <div class="form-group mb-3">
+            <label for="code" class="control-label">Confirm Password</label>
+            <input type="password" id="confirm_password_edit" name="password_hash" class="form-control" autocomplete="off">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-round btn-primary" id="edit_pass">Submit</button>
         </div>
       </form>
     </div>

@@ -15,9 +15,25 @@ $(document).ready(function () {
         title: "Status",
         render: function (data, type, row) {
           if (row["status"] === "active") {
-            return '<p class="btn btn-primary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-primary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           } else if (row["status"] === "inactive") {
-            return '<p class="btn btn-secondary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-secondary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           }
         },
       },
@@ -39,26 +55,58 @@ $(document).ready(function () {
   // Tambah data Transplanting
   $("#add_trans").click(function () {
     var sisa_groom = $("#jumlah_groom").val() - $("#terproses").val();
-    var formData = $("#create_Transplanting_form").serialize();
-    var id = $("#id_groom").val();
+    if (sisa_groom < 0) {
+      notifSisaMinus();
+    } else {
+      if (sisa_groom == 0) {
+        var statuss = "inactive";
+      } else {
+        var statuss = "active";
+      }
+      var formData = $("#create_Transplanting_form").serialize();
+      var id = $("#id_groom").val();
+      $.ajax({
+        url: urlTransplanting,
+        type: "POST",
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+          notifAddSuccess();
+          tableTransplanting.ajax.reload();
+          $("#modal_create").modal("hide");
+          $("#create_Transplanting_form")[0].reset();
+        },
+      });
+      $.ajax({
+        url: "http://localhost/tunasdash/api/grooming/" + id,
+        type: "PUT",
+        data: { sisa: sisa_groom, status: statuss },
+        dataType: "json",
+        success: function (data) {},
+      });
+    }
+  });
+
+  $(document).on("click", ".status", function (e) {
+    e.preventDefault();
+    var id_status = $(this).data("id");
+    var statuss = $(this).data("status");
+    if (statuss == "active") {
+      var dataStatus = "status" + "=" + "inactive";
+    } else if (statuss == "inactive") {
+      var dataStatus = "status" + "=" + "active";
+    }
     $.ajax({
-      url: urlTransplanting,
-      type: "POST",
-      data: formData,
-      dataType: "json",
-      success: function (data) {
-        notifAddSuccess();
-        tableTransplanting.ajax.reload();
-        $("#modal_create").modal("hide");
-        $("#create_Transplanting_form")[0].reset();
-      },
-    });
-    $.ajax({
-      url: "http://localhost/tunasdash/api/grooming/" + id,
+      url: urlTransplanting + "/" + id_status,
       type: "PUT",
-      data: { sisa: sisa_groom },
+      data: dataStatus,
       dataType: "json",
-      success: function (data) {},
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        notifStatusSuccess();
+        tableTransplanting.ajax.reload();
+      },
     });
   });
 
@@ -69,25 +117,29 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
-        $("#grooming").append(
-          "<option value='" +
-            data.data[i].grcode +
-            "'>" +
-            data.data[i].grcode +
-            "</option>"
-        );
+        if (data.data[i].grstatus == "active") {
+          $("#grooming").append(
+            "<option value='" +
+              data.data[i].grcode +
+              "'>" +
+              data.data[i].grcode +
+              "</option>"
+          );
+
+          $("#grooming_edit").append(
+            "<option value='" +
+              data.data[i].grcode +
+              "'>" +
+              data.data[i].grcode +
+              "</option>"
+          );
+        }
+
         $("#tower_level").append(
           "<option value='" +
             data.data[i].grtwrlvl +
             "'>" +
             data.data[i].grtwrlvl +
-            "</option>"
-        );
-        $("#grooming_edit").append(
-          "<option value='" +
-            data.data[i].grcode +
-            "'>" +
-            data.data[i].grcode +
             "</option>"
         );
         $("#tower_level_edit").append(
@@ -116,10 +168,9 @@ $(document).ready(function () {
           "selected",
           "selected"
         );
-        $("#tower_level_edit option[value='" + data.data.tower_level + "']").attr(
-          "selected",
-          "selected"
-        );
+        $(
+          "#tower_level_edit option[value='" + data.data.tower_level + "']"
+        ).attr("selected", "selected");
         $("#terproses_edit").attr("value", data.data.terproses);
         $("#sisa_edit").attr("value", data.data.sisa);
         $("#status_edit option[value='" + data.data.status + "']").attr(
@@ -146,6 +197,11 @@ $(document).ready(function () {
 
   $("#edit_trans").click(function () {
     var sisa_groom = $("#jumlah_groom").val() - $("#terproses_edit").val();
+    if (sisa_groom == 0) {
+      var statuss = "inactive";
+    } else {
+      var statuss = "active";
+    }
     var id = $("#id_groom").val();
     var edit_id = $("#edit_id").val();
     var dataJson = $("#edit_Transplanting_form").serialize();
@@ -216,10 +272,9 @@ $(document).ready(function () {
             $("#id_groom").attr("value", data.data[i].grid);
             $("#jumlah_groom").attr("value", data.data[i].grterproses);
             $("#id_tanaman").attr("value", data.data[i].grtanaman);
-            $("#tower_level option[value='" + data.data[i].grtwrlvl + "']").attr(
-              "selected",
-              "selected"
-            );
+            $(
+              "#tower_level option[value='" + data.data[i].grtwrlvl + "']"
+            ).attr("selected", "selected");
           }
         }
         var id_tanaman = $("#id_tanaman").val();

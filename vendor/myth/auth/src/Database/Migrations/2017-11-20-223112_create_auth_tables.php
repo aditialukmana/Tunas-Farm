@@ -1,4 +1,6 @@
-<?php namespace Myth\Auth\Database\Migrations;
+<?php
+
+namespace Myth\Auth\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
@@ -13,8 +15,9 @@ class CreateAuthTables extends Migration
             'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'email'            => ['type' => 'varchar', 'constraint' => 255],
             'username'         => ['type' => 'varchar', 'constraint' => 30, 'null' => true],
-            'fullname'         => ['type' => 'varchar', 'constraint' => 255,'null' => true],
-            'user_image'       => ['type' => 'varchar', 'constraint' => 255,'default'=>'default.svg'],
+            'fullname'         => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
+            'user_image'       => ['type' => 'varchar', 'constraint' => 255, 'default' => 'default.svg'],
+            'customer'         => ['type' => 'int', 'constraint' => 11],
             'password_hash'    => ['type' => 'varchar', 'constraint' => 255],
             'reset_hash'       => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
             'reset_at'         => ['type' => 'datetime', 'null' => true],
@@ -24,9 +27,14 @@ class CreateAuthTables extends Migration
             'status_message'   => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
             'active'           => ['type' => 'tinyint', 'constraint' => 1, 'null' => 0, 'default' => 0],
             'force_pass_reset' => ['type' => 'tinyint', 'constraint' => 1, 'null' => 0, 'default' => 0],
-            'created_at'       => ['type' => 'datetime', 'null' => true],
-            'updated_at'       => ['type' => 'datetime', 'null' => true],
-            'deleted_at'       => ['type' => 'datetime', 'null' => true],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
 
         $this->forge->addKey('id', true);
@@ -45,6 +53,14 @@ class CreateAuthTables extends Migration
             'user_id'    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'null' => true], // Only for successful logins
             'date'       => ['type' => 'datetime'],
             'success'    => ['type' => 'tinyint', 'constraint' => 1],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('email');
@@ -62,6 +78,14 @@ class CreateAuthTables extends Migration
             'hashedValidator' => ['type' => 'varchar', 'constraint' => 255],
             'user_id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true],
             'expires'         => ['type' => 'datetime'],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('selector');
@@ -78,6 +102,14 @@ class CreateAuthTables extends Migration
             'user_agent' => ['type' => 'varchar', 'constraint' => 255],
             'token'      => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
             'created_at' => ['type' => 'datetime', 'null' => false],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_reset_attempts');
@@ -91,6 +123,14 @@ class CreateAuthTables extends Migration
             'user_agent' => ['type' => 'varchar', 'constraint' => 255],
             'token'      => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
             'created_at' => ['type' => 'datetime', 'null' => false],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_activation_attempts');
@@ -102,6 +142,14 @@ class CreateAuthTables extends Migration
             'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'name'        => ['type' => 'varchar', 'constraint' => 255],
             'description' => ['type' => 'varchar', 'constraint' => 255],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ];
 
         $this->forge->addField($fields);
@@ -112,9 +160,16 @@ class CreateAuthTables extends Migration
          * Permissions Table
          */
         $fields = [
-            'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'name'        => ['type' => 'varchar', 'constraint' => 255],
             'description' => ['type' => 'varchar', 'constraint' => 255],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ];
 
         $this->forge->addField($fields);
@@ -127,6 +182,14 @@ class CreateAuthTables extends Migration
         $fields = [
             'group_id'      => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'permission_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ];
 
         $this->forge->addField($fields);
@@ -141,6 +204,14 @@ class CreateAuthTables extends Migration
         $fields = [
             'group_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'user_id'  => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ];
 
         $this->forge->addField($fields);
@@ -153,8 +224,17 @@ class CreateAuthTables extends Migration
          * Users/Permissions Table
          */
         $fields = [
+            'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'user_id'       => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'permission_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
+            'updated_by' => [
+                'type'                  => 'BIGINT',
+                'constraint'            => 20,
+                'unsigned'              => TRUE,
+            ],
+            'created_at datetime default current_timestamp',
+            'updated_at datetime default current_timestamp on update current_timestamp',
+            'deleted_at datetime',
         ];
 
         $this->forge->addField($fields);
@@ -168,9 +248,8 @@ class CreateAuthTables extends Migration
 
     public function down()
     {
-		// drop constraints first to prevent errors
-        if ($this->db->DBDriver != 'SQLite3')
-        {
+        // drop constraints first to prevent errors
+        if ($this->db->DBDriver != 'SQLite3') {
             $this->forge->dropForeignKey('auth_tokens', 'auth_tokens_user_id_foreign');
             $this->forge->dropForeignKey('auth_groups_permissions', 'auth_groups_permissions_group_id_foreign');
             $this->forge->dropForeignKey('auth_groups_permissions', 'auth_groups_permissions_permission_id_foreign');
@@ -180,15 +259,15 @@ class CreateAuthTables extends Migration
             $this->forge->dropForeignKey('auth_users_permissions', 'auth_users_permissions_permission_id_foreign');
         }
 
-		$this->forge->dropTable('users', true);
-		$this->forge->dropTable('auth_logins', true);
-		$this->forge->dropTable('auth_tokens', true);
-		$this->forge->dropTable('auth_reset_attempts', true);
+        $this->forge->dropTable('users', true);
+        $this->forge->dropTable('auth_logins', true);
+        $this->forge->dropTable('auth_tokens', true);
+        $this->forge->dropTable('auth_reset_attempts', true);
         $this->forge->dropTable('auth_activation_attempts', true);
-		$this->forge->dropTable('auth_groups', true);
-		$this->forge->dropTable('auth_permissions', true);
-		$this->forge->dropTable('auth_groups_permissions', true);
-		$this->forge->dropTable('auth_groups_users', true);
-		$this->forge->dropTable('auth_users_permissions', true);
+        $this->forge->dropTable('auth_groups', true);
+        $this->forge->dropTable('auth_permissions', true);
+        $this->forge->dropTable('auth_groups_permissions', true);
+        $this->forge->dropTable('auth_groups_users', true);
+        $this->forge->dropTable('auth_users_permissions', true);
     }
 }

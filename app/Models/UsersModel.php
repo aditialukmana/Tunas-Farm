@@ -23,11 +23,4 @@ class UsersModel extends Model
         if ($id == false) return $this->findAll();
         return $this->where(['id' => $id])->first();
     }
-
-    public function get_data($username)
-	{
-      return $this->db->table('users')
-      ->where(array('username' => $username))
-      ->get()->getRowArray();
-	}
 }

@@ -4,16 +4,14 @@ $(document).ready(function () {
   tableRoleUsers = $("#tableRoleUsers").DataTable({
     ajax: urlRoleUsers,
     columns: [
-      { data: "group_id", title: "Role ID" },
-      { data: "user_id", title: "User ID" },
+      { data: "usname", title: "User" },
+      { data: "agname", title: "Role" },
       {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-roleuser" title="Edit" data-id="' +
-            items.id +
-            '" data-toggle="modal" data-target="#modal_edit"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-roleuser" title="Delete" data-id="' +
-            items.id +
-            '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
+            items.gruid +
+            '" data-toggle="modal" data-target="#modal_edit"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a>'
           );
         },
         title: "Actions",
@@ -50,12 +48,12 @@ $(document).ready(function () {
       async: true,
       dataType: "json",
       success: function (data) {
-        $("#edit_id").val(data.id);
-        $("#role_edit option[value='" + data.group_id + "']").attr(
+        $("#edit_id").val(data.data.id);
+        $("#role_edit option[value='" + data.data.group_id + "']").attr(
           "selected",
           "selected"
         );
-        $("#user_edit option[value='" + data.user_id + "']").attr(
+        $("#user_edit option[value='" + data.data.user_id + "']").attr(
           "selected",
           "selected"
         );

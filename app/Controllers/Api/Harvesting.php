@@ -18,6 +18,7 @@ class Harvesting extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -59,9 +60,10 @@ class Harvesting extends ResourceController
 
 		if ($data) {
 			$this->model->save($data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Harvesting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -88,31 +90,32 @@ class Harvesting extends ResourceController
 		}
 
 		if ($this->model->update($id, $data)) {
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Harvesting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
-				'status'   => 201,
+				'status'   => 200,
+				'error'    => null,
 				'messages' => [
-					'success' => 'Data Saved'
-				],
-				'data'			=> $data
+					'success' => 'Data Deleted'
+				]
 			];
-			return $this->respondUpdated($response, 201);
+			return $this->respondDeleted($response, 200);
 		} else {
-			return $this->fail("Fail to save", 400);
+			return $this->failNotFound('No Data Found with id ' . $id, 400);
 		}
 	}
 
-	// delete product
 	public function delete($id = null)
 	{
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Harvesting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

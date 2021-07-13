@@ -11,7 +11,7 @@ class AuthTokensModel extends Model
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['token', 'user_id'];
+    protected $allowedFields = ['user_id', 'token'];
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';

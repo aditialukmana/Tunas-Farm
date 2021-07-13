@@ -1,9 +1,9 @@
 <?php
 
 
-function sys_log($controller, $message){
+function sys_log($user, $controller, $message){
     $session = \Config\Services::session();
-    $param['user'] = "joko";
+    $param['user'] = $user;
     $param['controller'] = $controller;
     $param['message']   = $message;
 

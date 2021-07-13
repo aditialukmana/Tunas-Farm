@@ -6,11 +6,11 @@ use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\URI;
 
-class ActuatorSites extends ResourceController
+class PrivilegeSettings extends ResourceController
 {
 	use ResponseTrait;
 
-	protected $modelName = 'App\Models\ActuatorSitesModel';
+	protected $modelName = 'App\Models\PrivilegeSettingsModel';
 	protected $format = 'json';
 	protected $request;
 
@@ -18,30 +18,21 @@ class ActuatorSites extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
 	public function index()
 	{
 		$data = $this->model->getData();
-		if ($data) {
-			$response = [
-				'status'   => 200,
-				'messages' => [
-					'success' => 'Get All Data'
-				],
-				'data'			=> $data
-			];
-			return $this->respond($response, 200);
-		} else {
-			$response = [
-				'status'   => 400,
-				'messages' => [
-					'failed' => 'No Data'
-				]
-			];
-			return $this->respond($response, 400);
-		}
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product
@@ -70,9 +61,10 @@ class ActuatorSites extends ResourceController
 
 		if ($data) {
 			$this->model->save($data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Actuator';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -93,9 +85,10 @@ class ActuatorSites extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Actuator';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -115,9 +108,10 @@ class ActuatorSites extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Actuator';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

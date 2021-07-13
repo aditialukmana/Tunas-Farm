@@ -18,6 +18,7 @@ class Sites extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -104,10 +105,11 @@ class Sites extends ResourceController
 		];
 		if ($data) {
 			$this->model->save($data);
+			$user = user()->username;
 			$photo->move(ROOTPATH . 'public/image_site/', $photo_name);
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Site';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -128,9 +130,10 @@ class Sites extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Site';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -150,9 +153,10 @@ class Sites extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Site';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

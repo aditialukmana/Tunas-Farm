@@ -6,11 +6,11 @@
   <div class="block-header">
     <div class="row clearfix">
       <div class="col-md-6 col-sm-12">
-        <h1>Role Management</h1>
+        <h1>Roles Management</h1>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>"><i class="icon-home"></i></a></li>
-            <li class="breadcrumb-item active">Role Management</li>
+            <li class="breadcrumb-item active">Roles Management</li>
           </ol>
         </nav>
       </div>

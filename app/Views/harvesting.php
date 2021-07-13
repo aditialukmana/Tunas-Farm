@@ -33,7 +33,6 @@
                   <th>Tanggal</th>
                   <th>Terproses</th>
                   <th>Sisa</th>
-                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>

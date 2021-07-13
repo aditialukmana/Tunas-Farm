@@ -18,6 +18,7 @@ class Transplanting extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -66,9 +67,10 @@ class Transplanting extends ResourceController
 
 		if ($data) {
 			$this->model->save($data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Transplanting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -88,10 +90,11 @@ class Transplanting extends ResourceController
 		$data = $this->request->getRawInput();
 
 		if ($data) {
+			$user = user()->username;
 			$this->model->update($id, $data);
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Transplanting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -111,9 +114,10 @@ class Transplanting extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Transplanting';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

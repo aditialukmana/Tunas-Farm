@@ -11,7 +11,7 @@
             <?php
             $groups = ['admin', 'owner'];
             if (in_groups($groups)) : ?>
-              <li class=""><a href="<?php echo base_url(''); ?>"><i class="icon-speedometer"></i><span>Dashboard</span></a></li>
+              <!-- <li class=""><a href="<?php echo base_url(''); ?>"><i class="icon-speedometer"></i><span>Dashboard</span></a></li> -->
             <?php endif; ?>
             <?php
 
@@ -32,6 +32,9 @@
                 </ul>
                 <ul>
                   <li id="menu-position" class=""><a href="<?php echo base_url('view/user'); ?>">Users</a></li>
+                </ul>
+                <ul>
+                  <li id="menu-position" class=""><a href="<?php echo base_url('view/authgroupsusers'); ?>">Roles Users</a></li>
                 </ul>
               </li>
               <li class="">
@@ -67,10 +70,10 @@
               <li class="">
                 <a href="#" class="has-arrow"><i class="fa fa-clock-o"></i><span>Actuator Managements</span></a>
                 <ul>
-                  <a href="<?= base_url('view/actuatordevices') ?>"><span>Actuator Grow Installations</span></a>
+                  <a href="<?= base_url('view/actuatorgrowinstallations') ?>"><span>Actuator Grow Installations</span></a>
                 </ul>
                 <ul>
-                  <a href="<?= base_url('view/actuatorsites') ?>"><span>Actuator Devices</span></a>
+                  <a href="<?= base_url('view/actuatordevices') ?>"><span>Actuator Devices</span></a>
                 </ul>
               </li>
               <li class="">

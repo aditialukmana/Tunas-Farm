@@ -1,14 +1,15 @@
-var urlActuatorSites = $("#tableActuatorSites").data("url");
+var urlActuatorGrowInstallations = $("#tableActuatorGrowInstallations").data("url");
 $(document).ready(function () {
-  var tableActuatorSites = $("#tableActuatorSites").DataTable({
-    ajax: urlActuatorSites,
+  var tableActuatorGrowInstallations = $("#tableActuatorGrowInstallations").DataTable({
+    ajax: urlActuatorGrowInstallations,
     columns: [
       { data: "site", title: "Site" },
       { data: "floor", title: "Floor" },
-      { data: "ac_start_time", title: "AC Start Time" },
-      { data: "ac_end_time", title: "AC End Time" },
-      { data: "light_start_time", title: "Ligth Start Time" },
-      { data: "light_end_time", title: "Ligth End Time" },
+      { data: "device", title: "Devices" },
+      { data: "growinstallation", title: "Grow Installations" },
+      { data: "watertemperature", title: "Water" },
+      { data: "tds", title: "TDS" },
+      { data: "ph", title: "PH" },
       {
         data: (items) => {
           return (
@@ -19,7 +20,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions",
       },
     ],
   });
@@ -27,13 +28,13 @@ $(document).ready(function () {
   $("#add_act_sites").click(function () {
     var dataJson = $("#create_ActuatorSites_form").serialize();
     $.ajax({
-      url: urlActuatorSites,
+      url: urlActuatorGrowInstallations,
       type: "POST",
       data: dataJson,
       dataType: "json",
       success: function (data) {
         notifAddSuccess();
-        tableActuatorSites.ajax.reload();
+        tableActuatorGrowInstallations.ajax.reload();
         $("#modal_create").modal("hide");
         $("#create_ActuatorSites_form")[0].reset();
       },
@@ -44,7 +45,7 @@ $(document).ready(function () {
     e.preventDefault();
     var id = $(this).data("id");
     $.ajax({
-      url: urlActuatorSites + "/" + id,
+      url: urlActuatorGrowInstallations + "/" + id,
       type: "GET",
       async: true,
       dataType: "json",
@@ -107,7 +108,7 @@ $(document).ready(function () {
     var edit_id = $("#edit_id").val();
     var dataJson = $("#edit_ActuatorSites_form").serialize();
     $.ajax({
-      url: urlActuatorSites + "/" + edit_id,
+      url: urlActuatorGrowInstallations + "/" + edit_id,
       type: "PUT",
       data: dataJson,
       dataType: "json",
@@ -117,7 +118,7 @@ $(document).ready(function () {
         notifUpdateSuccess();
         $("#modal_edit").modal("hide");
         $("#edit_ActuatorSites_form")[0].reset();
-        tableActuatorSites.ajax.reload();
+        tableActuatorGrowInstallations.ajax.reload();
       },
     });
   });
@@ -136,14 +137,14 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: urlActuatorSites + "/" + del_id,
+          url: urlActuatorGrowInstallations + "/" + del_id,
           type: "DELETE",
           data: { id: del_id },
           async: true,
           dataType: "json",
           success: function (response) {
             notifDeleteSuccess();
-            tableActuatorSites.ajax.reload();
+            tableActuatorGrowInstallations.ajax.reload();
           },
           error: function (e) {
             console.log("error", e);

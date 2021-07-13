@@ -102,9 +102,6 @@ class AuthTokens extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
-			$url = $this->request->uri->getSegment(2);
-			$message = 'Delete Transplanting';
-			sys_log($url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

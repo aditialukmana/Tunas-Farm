@@ -1,4 +1,4 @@
- var urlGrooming = $("#tableGrooming").data("url");
+var urlGrooming = $("#tableGrooming").data("url");
 var tableGrooming = null;
 $(document).ready(function () {
   tableGrooming = $("#tableGrooming").DataTable({
@@ -13,6 +13,29 @@ $(document).ready(function () {
       {
         data: "grstatus",
         title: "Status",
+        render: function (data, type, row) {
+          if (row["grstatus"] === "active") {
+            return (
+              '<button type="button" class="btn btn-primary status" data-status="' +
+              row["grstatus"] +
+              '" data-id="' +
+              row["grid"] +
+              '">' +
+              row["grstatus"] +
+              "</button>"
+            );
+          } else if (row["grstatus"] === "inactive") {
+            return (
+              '<button type="button" class="btn btn-secondary status" data-status="' +
+              row["grstatus"] +
+              '" data-id="' +
+              row["grid"] +
+              '">' +
+              row["grstatus"] +
+              "</button>"
+            );
+          }
+        },
       },
       {
         data: (items) => {
@@ -24,7 +47,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions ",
       },
     ],
     order: [[1, "asc"]],
@@ -32,26 +55,58 @@ $(document).ready(function () {
   // Tambah data Grooming
   $("#add_groom").click(function () {
     var sisa_seed = $("#jumlah_seed").val() - $("#terproses").val();
-    var formData = $("#create_Grooming_form").serialize();
-    var id = $("#id_seed").val();
+    if (sisa_seed < 0) {
+      notifSisaMinus();
+    } else {
+      if (sisa_seed == 0) {
+        var statuss = "inactive";
+      } else {
+        var statuss = "active";
+      }
+      var formData = $("#create_Grooming_form").serialize();
+      var id = $("#id_seed").val();
+      $.ajax({
+        url: urlGrooming,
+        type: "POST",
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+          notifAddSuccess();
+          tableGrooming.ajax.reload();
+          $("#modal_create").modal("hide");
+          $("#create_Grooming_form")[0].reset();
+        },
+      });
+      $.ajax({
+        url: "http://localhost/tunasdash/api/seedling/" + id,
+        type: "PUT",
+        data: { sisa: sisa_seed, status: statuss },
+        dataType: "json",
+        success: function (data) {},
+      });
+    }
+  });
+
+  $(document).on("click", ".status", function (e) {
+    e.preventDefault();
+    var id_status = $(this).data("id");
+    var statuss = $(this).data("status");
+    if (statuss == "active") {
+      var dataStatus = "status" + "=" + "inactive";
+    } else if (statuss == "inactive") {
+      var dataStatus = "status" + "=" + "active";
+    }
     $.ajax({
-      url: urlGrooming,
-      type: "POST",
-      data: formData,
-      dataType: "json",
-      success: function (data) {
-        notifAddSuccess();
-        tableGrooming.ajax.reload();
-        $("#modal_create").modal("hide");
-        $("#create_Grooming_form")[0].reset();
-      },
-    });
-    $.ajax({
-      url: "http://localhost/tunasdash/api/seedling/" + id,
+      url: urlGrooming + "/" + id_status,
       type: "PUT",
-      data: { sisa: sisa_seed },
+      data: dataStatus,
       dataType: "json",
-      success: function (data) {},
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        notifStatusSuccess();
+        tableGrooming.ajax.reload();
+      },
     });
   });
 
@@ -165,20 +220,22 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
-        $("#seedling").append(
-          "<option value='" +
-            data.data[i].id +
-            "'>" +
-            data.data[i].code +
-            "</option>"
-        );
-        $("#seedling_edit").append(
-          "<option value='" +
-            data.data[i].id +
-            "'>" +
-            data.data[i].code +
-            "</option>"
-        );
+        if (data.data[i].status == "active") {
+          $("#seedling").append(
+            "<option value='" +
+              data.data[i].id +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+          $("#seedling_edit").append(
+            "<option value='" +
+              data.data[i].id +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+        }
       }
     },
   });

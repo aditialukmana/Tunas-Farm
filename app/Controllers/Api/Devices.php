@@ -59,9 +59,10 @@ class Devices extends ResourceController
 	{
 		$data = $this->request->getPost();
 		if ($data) {
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Device';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$this->model->save($data);
 			$response = [
 				'status'   => 201,
@@ -83,9 +84,10 @@ class Devices extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Device';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -105,9 +107,10 @@ class Devices extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Device';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

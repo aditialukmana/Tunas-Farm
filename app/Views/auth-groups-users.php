@@ -30,7 +30,7 @@
                 <tr>
                   <th>Role ID</th>
                   <th>Users ID</th>
-                  <th style="width: 20%;">Action</th>
+                  <th style="width: 10%;">Action</th>
                 </tr>
               </thead>
               <tbody>

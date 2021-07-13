@@ -15,9 +15,25 @@ $(document).ready(function () {
         title: "Status",
         render: function (data, type, row) {
           if (row["status"] === "active") {
-            return '<p class="btn btn-primary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-primary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           } else if (row["status"] === "inactive") {
-            return '<p class="btn btn-secondary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-secondary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           }
         },
       },
@@ -50,6 +66,29 @@ $(document).ready(function () {
         tableSeedling.ajax.reload();
         $("#modal_create").modal("hide");
         $("#create_Seedling_form")[0].reset();
+      },
+    });
+  });
+
+  $(document).on("click", ".status", function (e) {
+    e.preventDefault();
+    var id_status = $(this).data("id");
+    var statuss = $(this).data("status");
+    if (statuss == "active") {
+      var dataStatus = "status" + "=" + "inactive";
+    } else if (statuss == "inactive") {
+      var dataStatus = "status" + "=" + "active";
+    }
+    $.ajax({
+      url: urlSeedling + "/" + id_status,
+      type: "PUT",
+      data: dataStatus,
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        notifStatusSuccess();
+        tableSeedling.ajax.reload();
       },
     });
   });
@@ -138,20 +177,22 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
-        $("#sprouting").append(
-          "<option value='" +
-            data.data[i].code +
-            "'>" +
-            data.data[i].code +
-            "</option>"
-        );
-        $("#sprouting_edit").append(
-          "<option value='" +
-            data.data[i].code +
-            "'>" +
-            data.data[i].code +
-            "</option>"
-        );
+        if (data.data[i].status == "active") {
+          $("#sprouting").append(
+            "<option value='" +
+              data.data[i].code +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+          $("#sprouting_edit").append(
+            "<option value='" +
+              data.data[i].code +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+        }
       }
     },
   });

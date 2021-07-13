@@ -14,9 +14,25 @@ $(document).ready(function () {
         title: "Status",
         render: function (data, type, row) {
           if (row["status"] === "active") {
-            return '<p class="btn btn-primary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-primary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           } else if (row["status"] === "inactive") {
-            return '<p class="btn btn-secondary">' + row["status"] + "</p>";
+            return (
+              '<button type="button" class="btn btn-secondary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
           }
         },
       },
@@ -49,6 +65,29 @@ $(document).ready(function () {
         tableSprouting.ajax.reload();
         $("#modal_create").modal("hide");
         $("#create_Sprouting_form")[0].reset();
+      },
+    });
+  });
+
+  $(document).on("click", ".status", function (e) {
+    e.preventDefault();
+    var id_status = $(this).data("id");
+    var statuss = $(this).data("status");
+    if (statuss == "active") {
+      var dataStatus = "status" + "=" + "inactive";
+    } else if (statuss == "inactive") {
+      var dataStatus = "status" + "=" + "active";
+    }
+    $.ajax({
+      url: urlSprouting + "/" + id_status,
+      type: "PUT",
+      data: dataStatus,
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        notifStatusSuccess();
+        tableSprouting.ajax.reload();
       },
     });
   });

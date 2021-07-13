@@ -6,11 +6,12 @@ $(document).ready(function () {
       { data: "site", title: "Site" },
       { data: "floor", title: "Floor" },
       { data: "device", title: "device" },
-      { data: "water", title: "Water" },
-      { data: "air", title: "Air" },
+      { data: "airtemperature", title: "Air" },
       { data: "humidity", title: "Humidity" },
-      { data: "tds", title: "TDS" },
-      { data: "ph", title: "PH" },
+      { data: "acstart", title: "AC Start Time" },
+      { data: "acend", title: "End Time" },
+      { data: "lightstart", title: "Light Start Time" },
+      { data: "lightend", title: "End Time" },
       {
         data: (items) => {
           return (
@@ -21,7 +22,7 @@ $(document).ready(function () {
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
-        title: "Action",
+        title: "Actions",
       },
     ],
   });

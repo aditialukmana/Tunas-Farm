@@ -18,6 +18,7 @@ class Contracts extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -75,9 +76,10 @@ class Contracts extends ResourceController
 		if ($data) {
 			$this->model->save($data);
 			$document->move(ROOTPATH . 'public/documents/', $document_name);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Contract';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -104,9 +106,10 @@ class Contracts extends ResourceController
 
 		if ($data) {
 			$this->model->update($id, $data);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Contract';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -126,9 +129,10 @@ class Contracts extends ResourceController
 		$data = $this->model->find($id);
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Delete Contract';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

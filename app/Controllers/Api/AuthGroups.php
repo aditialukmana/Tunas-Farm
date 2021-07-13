@@ -19,6 +19,7 @@ class AuthGroups extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product
@@ -60,9 +61,10 @@ class AuthGroups extends ResourceController
 		$data = $this->request->getPost();
 
 		if ($data) {
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Create Role';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$this->model->save($data);
 			$response = [
 				'status'   => 201,
@@ -83,9 +85,10 @@ class AuthGroups extends ResourceController
 		$data = $this->request->getRawInput();
 
 		if ($data) {
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
 			$message = 'Update Role';
-			sys_log($url, $message);
+			sys_log($user, $url, $message);
 			$this->model->update($id, $data);
 			$response = [
 				'status'   => 201,
@@ -105,16 +108,12 @@ class AuthGroups extends ResourceController
 	{
 		$data = $this->model->find($id);
 
-		$this->model->delete($id);
-		$url = $this->request->uri->getSegment(2);
-		$message = 'Delete Role';
-		sys_log($url, $message);
-
 		if ($data) {
 			$this->model->delete($id);
+			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
-			$message = 'Delete Transplanting';
-			sys_log($url, $message);
+			$message = 'Delete Role';
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,
 				'error'    => null,

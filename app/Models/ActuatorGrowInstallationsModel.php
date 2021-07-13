@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ActuatorSitesModel extends Model
+class ActuatorGrowInstallationsModel extends Model
 {
-    protected $table      = 'actuator_sites';
+    protected $table      = 'actuatorgrowinstallations';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['site', 'floor', 'ac_start_time', 'ac_end_time', 'light_start_time', 'light_end_time'];
+    protected $allowedFields = ['site', 'floor', 'device', 'growinstallation', 'watertemperature', 'tds', 'ph'];
 
     // protected $returnType = 'App\Entities\PlantDataLogs';
 

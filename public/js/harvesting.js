@@ -10,17 +10,6 @@ $(document).ready(function () {
       { data: "terproses", title: "terproses" },
       { data: "sisa", title: "sisa" },
       {
-        data: "status",
-        title: "Status",
-        render: function (data, type, row) {
-          if (row["status"] === "active") {
-            return '<p class="btn btn-primary">' + row["status"] + "</p>";
-          } else if (row["status"] === "inactive") {
-            return '<p class="btn btn-secondary">' + row["status"] + "</p>";
-          }
-        },
-      },
-      {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-harvesting" title="Edit" data-id="' +
@@ -38,28 +27,39 @@ $(document).ready(function () {
   // Tambah data harvesting
   $("#add_harvest").click(function () {
     var sisa_trans = $("#jumlah_trans").val() - $("#terproses").val();
-    var formData = $("#create_Harvesting_form").serialize();
-    var id = $("#id_trans").val();
-    $.ajax({
-      url: urlHarvesting,
-      type: "POST",
-      data: formData,
-      dataType: "json",
-      success: function (data) {
-        notifAddSuccess();
-        tableHarvesting.ajax.reload();
-        $("#modal_create").modal("hide");
-        $("#create_Harvesting_form")[0].reset();
-      },
-    });
-    $.ajax({
-      url: "http://localhost/tunasdash/api/transplanting/" + id,
-      type: "PUT",
-      data: { sisa: sisa_trans },
-      dataType: "json",
-      success: function (data) {},
-    });
+    if(sisa_trans < 0 ) {
+      notifSisaMinus();
+    } else {
+      if(sisa_trans == 0) {
+        var statuss = "inactive";
+      } else {
+        var statuss = "active";
+      }
+      var formData = $("#create_Harvesting_form").serialize();
+      var id = $("#id_trans").val();
+      $.ajax({
+        url: urlHarvesting,
+        type: "POST",
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+          notifAddSuccess();
+          tableHarvesting.ajax.reload();
+          $("#modal_create").modal("hide");
+          $("#create_Harvesting_form")[0].reset();
+        },
+      });
+      $.ajax({
+        url: "http://localhost/tunasdash/api/transplanting/" + id,
+        type: "PUT",
+        data: { sisa: sisa_trans, status: statuss},
+        dataType: "json",
+        success: function (data) {},
+      });
+    }
   });
+
+  
 
   $.ajax({
     url: "http://localhost/tunasdash/api/transplanting/",
@@ -68,25 +68,27 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
-        $("#transplanting").append(
-          "<option value='" +
-            data.data[i].code +
-            "'>" +
-            data.data[i].code +
-            "</option>"
-        );
+        if (data.data[i].status == "active") {
+          $("#transplanting").append(
+            "<option value='" +
+              data.data[i].code +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+          $("#transplanting_edit").append(
+            "<option value='" +
+              data.data[i].code +
+              "'>" +
+              data.data[i].code +
+              "</option>"
+          );
+        }
         $("#tower_level").append(
           "<option value='" +
             data.data[i].tower_level +
             "'>" +
             data.data[i].tower_level +
-            "</option>"
-        );
-        $("#transplanting_edit").append(
-          "<option value='" +
-            data.data[i].code +
-            "'>" +
-            data.data[i].code +
             "</option>"
         );
         $("#tower_level_edit").append(
