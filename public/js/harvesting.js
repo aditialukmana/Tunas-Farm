@@ -10,6 +10,33 @@ $(document).ready(function () {
       { data: "terproses", title: "terproses" },
       { data: "sisa", title: "sisa" },
       {
+        data: "status",
+        title: "Status",
+        render: function (data, type, row) {
+          if (row["status"] === "active") {
+            return (
+              '<button type="button" class="btn btn-primary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
+          } else if (row["status"] === "inactive") {
+            return (
+              '<button type="button" class="btn btn-secondary status" data-status="' +
+              row["status"] +
+              '" data-id="' +
+              row["id"] +
+              '">' +
+              row["status"] +
+              "</button>"
+            );
+          }
+        },
+      },
+      {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-harvesting" title="Edit" data-id="' +
@@ -24,13 +51,19 @@ $(document).ready(function () {
     ],
     order: [[1, "asc"]],
   });
+
+  $("#terproses").change(function () {
+    var terproses = $("#terproses").val();
+    $("#sisa").attr("value", terproses);
+  });
+
   // Tambah data harvesting
   $("#add_harvest").click(function () {
     var sisa_trans = $("#jumlah_trans").val() - $("#terproses").val();
-    if(sisa_trans < 0 ) {
+    if (sisa_trans < 0) {
       notifSisaMinus();
     } else {
-      if(sisa_trans == 0) {
+      if (sisa_trans == 0) {
         var statuss = "inactive";
       } else {
         var statuss = "active";
@@ -52,14 +85,12 @@ $(document).ready(function () {
       $.ajax({
         url: "http://localhost/tunasdash/api/transplanting/" + id,
         type: "PUT",
-        data: { sisa: sisa_trans, status: statuss},
+        data: { sisa: sisa_trans, status: statuss },
         dataType: "json",
         success: function (data) {},
       });
     }
   });
-
-  
 
   $.ajax({
     url: "http://localhost/tunasdash/api/transplanting/",
@@ -76,14 +107,16 @@ $(document).ready(function () {
               data.data[i].code +
               "</option>"
           );
-          $("#transplanting_edit").append(
-            "<option value='" +
-              data.data[i].code +
-              "'>" +
-              data.data[i].code +
-              "</option>"
-          );
         }
+
+        $("#transplanting_edit").append(
+          "<option value='" +
+            data.data[i].code +
+            "'>" +
+            data.data[i].code +
+            "</option>"
+        );
+
         $("#tower_level").append(
           "<option value='" +
             data.data[i].tower_level +
@@ -118,10 +151,7 @@ $(document).ready(function () {
         ).attr("selected", "selected");
         $("#terproses_edit").attr("value", data.terproses);
         $("#sisa_edit").attr("value", data.sisa);
-        $("#status_edit option[value='" + data.status + "']").attr(
-          "selected",
-          "selected"
-        );
+        $("#tanggal_edit").attr("value", data.tanggal);
       },
     });
     $.ajax({
@@ -212,6 +242,8 @@ $(document).ready(function () {
             $("#id_trans").attr("value", data.data[i].id);
             $("#jumlah_trans").attr("value", data.data[i].terproses);
             $("#id_tanaman").attr("value", data.data[i].id_tanaman);
+            $("#terproses").attr("value", data.data[i].sisa);
+            $("#sisa").attr("value", data.data[i].sisa);
           }
         }
         var id_tanaman = $("#id_tanaman").val();
@@ -225,6 +257,29 @@ $(document).ready(function () {
             $("#code").attr("value", codeTrans);
           },
         });
+      },
+    });
+  });
+
+  $(document).on("click", ".status", function (e) {
+    e.preventDefault();
+    var id_status = $(this).data("id");
+    var statuss = $(this).data("status");
+    if (statuss == "active") {
+      var dataStatus = "status" + "=" + "inactive";
+    } else if (statuss == "inactive") {
+      var dataStatus = "status" + "=" + "active";
+    }
+    $.ajax({
+      url: urlHarvesting + "/" + id_status,
+      type: "PUT",
+      data: dataStatus,
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        notifStatusSuccess();
+        tableHarvesting.ajax.reload();
       },
     });
   });

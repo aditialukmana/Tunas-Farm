@@ -52,6 +52,12 @@ $(document).ready(function () {
     ],
     order: [[1, "asc"]],
   });
+
+  $("#terproses").change(function () {
+    var terproses = $("#terproses").val();
+    $("#sisa").attr("value", terproses);
+  });
+
   // Tambah data Grooming
   $("#add_groom").click(function () {
     var sisa_seed = $("#jumlah_seed").val() - $("#terproses").val();
@@ -131,10 +137,7 @@ $(document).ready(function () {
         $("#terproses_edit").attr("value", data.data.terproses);
         $("#sisa_edit").attr("value", data.data.sisa);
         $("#reject_edit").attr("value", data.data.reject);
-        $("#status_edit option[value='" + data.data.status + "']").attr(
-          "selected",
-          "selected"
-        );
+        $("#tanggal_edit").attr("value", data.tanggal);
       },
     });
     $.ajax({
@@ -144,9 +147,9 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (data.data[i].code == $("#seedling_edit").val()) {
-            $("#id_seed").attr("value", data.data[i].id);
-            $("#jumlah_seed").attr("value", data.data[i].seedling);
+          if (data.data[i].secode == $("#seedling_edit").val()) {
+            $("#id_seed").attr("value", data.data[i].seid);
+            $("#jumlah_seed").attr("value", data.data[i].seseedling);
           }
         }
       },
@@ -220,19 +223,19 @@ $(document).ready(function () {
     dataType: "json",
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
-        if (data.data[i].status == "active") {
+        if (data.data[i].sestatus == "active") {
           $("#seedling").append(
             "<option value='" +
-              data.data[i].id +
+              data.data[i].seid +
               "'>" +
-              data.data[i].code +
+              data.data[i].secode +
               "</option>"
           );
           $("#seedling_edit").append(
             "<option value='" +
-              data.data[i].id +
+              data.data[i].seid +
               "'>" +
-              data.data[i].code +
+              data.data[i].secode +
               "</option>"
           );
         }
@@ -248,10 +251,12 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (data.data[i].id == $("#seedling").val()) {
-            $("#id_seed").attr("value", data.data[i].id);
-            $("#jumlah_seed").attr("value", data.data[i].seedling);
-            $("#id_tanaman").attr("value", data.data[i].id_tanaman);
+          if (data.data[i].seid == $("#seedling").val()) {
+            $("#id_seed").attr("value", data.data[i].seid);
+            $("#jumlah_seed").attr("value", data.data[i].seseedling);
+            $("#id_tanaman").attr("value", data.data[i].setanaman);
+            $("#terproses").attr("value", data.data[i].sesisa);
+            $("#sisa").attr("value", data.data[i].sesisa);
           }
         }
         var id_tanaman = $("#id_tanaman").val();

@@ -25,25 +25,14 @@ class PlantDataLogs extends ResourceController
 	public function index()
 	{
 		$data = $this->model->joinData();
-		if($data) {
-			$response = [
-				'status'   => 200,
-				'messages' => [
-					'success' => 'Get All Data'
-				],
-				'data'			=> $data
-			];
-			return $this->respond($response, 200);
-		} else {
-			$response = [
-				'status'   => 200,
-				'messages' => [
-					'success' => 'Fail Get All Data'
-				],
-				'data'			=> []
-			];
-			return $this->respond($response, 400);
-		}
+		$response = [
+			'status'   => 200,
+			'messages' => [
+				'success' => 'Get All Data'
+			],
+			'data'			=> $data
+		];
+		return $this->respond($response, 200);
 	}
 
 	// get single product

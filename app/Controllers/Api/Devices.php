@@ -19,6 +19,7 @@ class Devices extends ResourceController
 	{
 		$this->validation = \Config\Services::validation();
 		helper('system_log');
+		helper('auth');
 	}
 
 	// get all product

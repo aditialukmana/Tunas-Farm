@@ -55,49 +55,53 @@ $(document).ready(function () {
     });
   });
 
-//   $("#add_plantdata").click(function () {
-//     var dataJson = $("#create_PlantData_form").serialize();
-//     $.ajax({
-//       url: urlPlantData,
-//       type: "POST",
-//       data: dataJson,
-//       dataType: "json",
-//       success: function (data) {
-//         notifAddSuccess();
-//         tablePlantData.ajax.reload();
-//         $("#modal_create").modal("hide");
-//         $("#create_PlantData_form")[0].reset();
-//       },
-//     });
-//   });
+  $("#add_plantdata").click(function () {
+    var dataJson = $("#create_PlantData_form").serialize();
+    $.ajax({
+      url: urlPlantData,
+      type: "POST",
+      data: dataJson,
+      dataType: "json",
+      success: function (data) {
+        notifAddSuccess();
+        tablePlantData.ajax.reload();
+        $("#modal_create").modal("hide");
+        $("#create_PlantData_form")[0].reset();
+      },
+    });
+  });
 
-//   $.ajax({
-//     url: "http://localhost/tunasdash/api/devices",
-//     type: "POST",
-//     dataType: "json",
-//     success: function (data) {
-//       $("#device").append(
-//         "<option value='" +
-//           data.data[i].code +
-//           "'>" +
-//           data.data[i].code +
-//           "</option>"
-//       );
-//     },
-//   });
+  $.ajax({
+    url: "http://localhost/tunasdash/api/devices",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      for (var i = 0; i <= data.data.length; i++) {
+        $("#device").append(
+          "<option value='" +
+            data.data[i].deid +
+            "'>" +
+            data.data[i].decode +
+            "</option>"
+        );
+      }
+    },
+  });
 
-//   $.ajax({
-//     url: "http://localhost/tunasdash/api/growinstallations",
-//     type: "POST",
-//     dataType: "json",
-//     success: function (data) {
-//       $("#grow_installation").append(
-//         "<option value='" +
-//           data.data[i].code +
-//           "'>" +
-//           data.data[i].code +
-//           "</option>"
-//       );
-//     },
-//   });
+  $.ajax({
+    url: "http://localhost/tunasdash/api/growinstallations",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      for (var i = 0; i <= data.data.length; i++) {
+        $("#grow_installation").append(
+          "<option value='" +
+            data.data[i].grid +
+            "'>" +
+            data.data[i].grcode +
+            "</option>"
+        );
+      }
+    },
+  });
 });

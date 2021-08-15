@@ -73,18 +73,19 @@
           <div class="form-group mb-3">
             <label for="code" class="control-label">Tower & Level</label>
             <select name="tower_level" id="tower_level" class="form-control">
-            <option>Choose...</option>
+              <option>Choose...</option>
             </select>
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Tanggal</label>
-            <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+            <input type="date" id="tanggal" name="tanggal" class="form-control">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Terproses</label>
             <input type="number" id="terproses" name="terproses" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
+            <input type="text" name="sisa" id="sisa" hidden>
             <label for="code" class="control-label">Status</label>
             <select name="status" id="status" class="form-control">
               <option value="active">Active</option>
@@ -107,7 +108,7 @@
     <div class="modal-content">
       <form id="edit_Transplanting_form">
         <div class="modal-header">
-        <input type="number" name="id" id="edit_id" hidden>
+          <input type="number" name="id" id="edit_id" hidden>
           <h5 class="modal-title" id="exampleModalLabel">Edit Transplanting</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
@@ -125,6 +126,12 @@
             <select name="tower_level" id="tower_level_edit" class="form-control">
             </select>
           </div>
+
+          <div class="form-group mb-3">
+            <label for="code" class="control-label">Tanggal</label>
+            <input type="date" id="tanggal_edit" name="tanggal" class="form-control">
+          </div>
+
           <div class="form-group mb-3">
             <label for="code" class="control-label">Terproses</label>
             <input type="number" id="terproses_edit" name="terproses" class="form-control" autocomplete="off">
@@ -132,13 +139,6 @@
           <div class="form-group mb-3">
             <label for="code" class="control-label">Sisa</label>
             <input type="number" id="sisa_edit" name="sisa" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Status</label>
-            <select name="status" id="status_edit" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
           </div>
         </div>
         <div class="modal-footer">

@@ -33,6 +33,7 @@
                   <th>Tanggal</th>
                   <th>Terproses</th>
                   <th>Sisa</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -76,13 +77,14 @@
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Tanggal</label>
-            <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+            <input type="date" id="tanggal" name="tanggal" class="form-control">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Terproses</label>
             <input type="number" id="terproses" name="terproses" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
+            <input type="text" name="sisa" id="sisa" hidden>
             <label for="code" class="control-label">Status</label>
             <select name="status" id="status" class="form-control">
               <option value="active">Active</option>
@@ -118,19 +120,16 @@
             </select>
           </div>
           <div class="form-group mb-3">
+            <label for="code" class="control-label">Tanggal</label>
+            <input type="date" id="tanggal_edit" name="tanggal" class="form-control">
+          </div>
+          <div class="form-group mb-3">
             <label for="code" class="control-label">Terproses</label>
             <input type="number" id="terproses_edit" name="terproses" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Sisa</label>
             <input type="number" id="sisa_edit" name="sisa" class="form-control" autocomplete="off">
-          </div>
-          <div class="form-group mb-3">
-            <label for="code" class="control-label">Status</label>
-            <select name="status" id="status_edit" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
           </div>
           <input type="number" name="id_tanaman" id="id_tanaman_edit" hidden>
         </div>

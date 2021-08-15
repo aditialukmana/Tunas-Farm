@@ -8,7 +8,7 @@ class Transplanting extends BaseController
 {
 	public function index()
 	{
-		$data['title'] = 'Transplanting - - Tunas Farm';
+		$data['title'] = 'Transplanting - Tunas Farm';
 		return view('transplanting', $data);
 	}
 }

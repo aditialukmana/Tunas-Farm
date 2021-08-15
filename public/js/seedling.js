@@ -4,34 +4,34 @@ $(document).ready(function () {
   tableSeedling = $("#tableSeedling").DataTable({
     ajax: urlSeedling,
     columns: [
-      { data: "code", title: "Code" },
-      { data: "sprouting", title: "Sprouting" },
-      { data: "seedling", title: "Seedling" },
-      { data: "tanggal", title: "Tanggal" },
-      { data: "sisa", title: "Sisa" },
-      { data: "reject", title: "Reject" },
+      { data: "secode", title: "Code" },
+      { data: "spcode", title: "Sprouting" },
+      { data: "seseedling", title: "Seedling" },
+      { data: "setanggal", title: "Tanggal" },
+      { data: "sesisa", title: "Sisa" },
+      { data: "sereject", title: "Reject" },
       {
-        data: "status",
+        data: "sestatus",
         title: "Status",
         render: function (data, type, row) {
-          if (row["status"] === "active") {
+          if (row["sestatus"] === "active") {
             return (
               '<button type="button" class="btn btn-primary status" data-status="' +
-              row["status"] +
+              row["sestatus"] +
               '" data-id="' +
-              row["id"] +
+              row["seid"] +
               '">' +
-              row["status"] +
+              row["sestatus"] +
               "</button>"
             );
-          } else if (row["status"] === "inactive") {
+          } else if (row["sestatus"] === "inactive") {
             return (
               '<button type="button" class="btn btn-secondary status" data-status="' +
-              row["status"] +
+              row["sestatus"] +
               '" data-id="' +
-              row["id"] +
+              row["seid"] +
               '">' +
-              row["status"] +
+              row["sestatus"] +
               "</button>"
             );
           }
@@ -41,9 +41,9 @@ $(document).ready(function () {
         data: (items) => {
           return (
             '<a href="javascript:void(0);" class="btn btn-default mb-2 edit-seedling" title="Edit" data-id="' +
-            items.id +
+            items.seid +
             '" data-toggle="modal" data-target="#modal_edit"><span class="sr-only">Edit</span> <i class="fa fa-edit"></i></a> <a href="javascript:void(0);" class="btn btn-default mb-2 delete-seedling" title="Delete" data-id="' +
-            items.id +
+            items.seid +
             '"><span class="sr-only">Delete</span> <i class="fa fa-trash-o text-danger"></i></a>'
           );
         },
@@ -53,21 +53,45 @@ $(document).ready(function () {
     order: [[1, "asc"]],
   });
 
+
+  $("#seedling").change(function () {
+    var seedling = $("#seedling").val();
+    $("#sisa").attr("value", seedling);
+  });
+
   // Tambah data Seedling
   $("#add_seed").click(function () {
     var formData = $("#create_Seedling_form").serialize();
-    $.ajax({
-      url: urlSeedling,
-      type: "POST",
-      data: formData,
-      dataType: "json",
-      success: function (data) {
-        notifAddSuccess();
-        tableSeedling.ajax.reload();
-        $("#modal_create").modal("hide");
-        $("#create_Seedling_form")[0].reset();
-      },
-    });
+    var id = $("#id_sprout").val();
+    var sisa_sprout = $("#jumlah_sprout").val() - $("#seedling").val();
+    if (sisa_sprout < 0) {
+      notifSisaMinus();
+    } else {
+      if (sisa_sprout == 0) {
+        var statuss = "inactive";
+      } else {
+        var statuss = "active";
+      }
+      $.ajax({
+        url: urlSeedling,
+        type: "POST",
+        data: formData,
+        dataType: "json",
+        success: function (data) {
+          notifAddSuccess();
+          tableSeedling.ajax.reload();
+          $("#modal_create").modal("hide");
+          $("#create_Seedling_form")[0].reset();
+        },
+      });
+      $.ajax({
+        url: "http://localhost/tunasdash/api/sprouting/" + id,
+        type: "PUT",
+        data: { sisa: sisa_sprout, status: statuss },
+        dataType: "json",
+        success: function (data) {},
+      });
+    }
   });
 
   $(document).on("click", ".status", function (e) {
@@ -111,10 +135,7 @@ $(document).ready(function () {
         $("#seedling_edit").attr("value", data.seedling);
         $("#sisa_edit").attr("value", data.sisa);
         $("#reject_edit").attr("value", data.reject);
-        $("#status_edit option[value='" + data.status + "']").attr(
-          "selected",
-          "selected"
-        );
+        $("#tanggal_edit").attr("value", data.tanggal);
       },
     });
   });
@@ -180,14 +201,14 @@ $(document).ready(function () {
         if (data.data[i].status == "active") {
           $("#sprouting").append(
             "<option value='" +
-              data.data[i].code +
+              data.data[i].id +
               "'>" +
               data.data[i].code +
               "</option>"
           );
           $("#sprouting_edit").append(
             "<option value='" +
-              data.data[i].code +
+              data.data[i].id +
               "'>" +
               data.data[i].code +
               "</option>"
@@ -207,8 +228,12 @@ $(document).ready(function () {
       dataType: "json",
       success: function (data) {
         for (var i = 0; i < data.data.length; i++) {
-          if (sprouting == data.data[i].code) {
+          if (sprouting == data.data[i].id) {
             $("#id_tanaman").attr("value", data.data[i].id_tanaman);
+            $("#id_sprout").attr("value", data.data[i].id);
+            $("#jumlah_sprout").attr("value", data.data[i].benih);
+            $("#seedling").attr("value", data.data[i].sisa);
+            $("#sisa").attr("value", data.data[i].sisa);
           }
         }
         var id_tanaman = $("#id_tanaman").val();

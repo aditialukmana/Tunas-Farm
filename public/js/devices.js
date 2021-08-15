@@ -32,16 +32,10 @@ $(document).ready(function () {
     ],
   });
 
-$("#site").change(function () {
-    var site = $("#site").find(":selected").text();
-    var code = $("#code").val();
-    $("#code").attr("value", code+"-"+site);
-  });
-
   $("#site_edit").change(function () {
     var site_edit = $("#site_edit").find(":selected").text();
     var code_edit = $("#code_edit").val();
-    $("#code_edit").attr("value", code_edit+"-"+site_edit);
+    $("#code_edit").attr("value", code_edit + "-" + site_edit);
   });
 
   $("#add_device").click(function () {
@@ -87,30 +81,38 @@ $("#site").change(function () {
     },
   });
 
-  $.ajax({
-    url: "http://localhost/tunasdash/api/growinstallations/",
-    type: "GET",
-    async: true,
-    dataType: "json",
-    success: function (data) {
-      var i = 0;
-      for (i; i <= data.data.length; i++) {
-        $("#grow_installation").append(
-          "<option value='" +
-            data.data[i].grid +
-            "'>" +
-            data.data[i].grcode +
-            "</option>"
-        );
-        $("#grow_installation_edit").append(
-          "<option value='" +
-            data.data[i].grid +
-            "'>" +
-            data.data[i].grcode +
-            "</option>"
-        );
-      }
-    },
+  $("#site").change(function () {
+    var site = $("#site option:selected").val();
+    var sites = $("#site option:selected").text();
+    var code = $("#code").val();
+    $("#code").attr("value", code + "-" + sites);
+    $.ajax({
+      url: "http://localhost/tunasdash/api/growinstallations/",
+      type: "GET",
+      async: true,
+      dataType: "json",
+      success: function (data) {
+        var i = 0;
+        for (i; i <= data.data.length; i++) {
+          if (site == data.data[i].seid) {
+            $("#grow_installation").append(
+              "<option value='" +
+                data.data[i].grid +
+                "'>" +
+                data.data[i].grcode +
+                "</option>"
+            );
+            $("#grow_installation_edit").append(
+              "<option value='" +
+                data.data[i].grid +
+                "'>" +
+                data.data[i].grcode +
+                "</option>"
+            );
+          }
+        }
+      },
+    });
   });
 
   // Edit data Device
@@ -123,15 +125,16 @@ $("#site").change(function () {
       async: true,
       dataType: "json",
       success: function (data) {
-        $("#edit_id").attr("value", data.data.id); 
+        $("#edit_id").attr("value", data.data.id);
         $("#site_edit option[value='" + data.data.site + "']").attr(
           "selected",
           "selected"
         );
-        $("#grow_installation_edit option[value='" + data.data.grow_installation + "']").attr(
-          "selected",
-          "selected"
-        );
+        $(
+          "#grow_installation_edit option[value='" +
+            data.data.grow_installation +
+            "']"
+        ).attr("selected", "selected");
         $("#status_edit option[value='" + data.data.status + "']").attr(
           "selected",
           "selected"

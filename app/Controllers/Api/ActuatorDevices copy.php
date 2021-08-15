@@ -2,17 +2,15 @@
 
 namespace App\Controllers\Api;
 
-use App\Models\AuthTokensModel;
-use Myth\Auth\Controllers\AuthController;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\URI;
 
-class PlantTypes extends ResourceController
+class ActuatorDevices extends ResourceController
 {
 	use ResponseTrait;
 
-	protected $modelName = 'App\Models\PlantTypesModel';
+	protected $modelName = 'App\Models\ActuatorDevicesModel';
 	protected $format = 'json';
 	protected $request;
 
@@ -23,7 +21,7 @@ class PlantTypes extends ResourceController
 		helper('auth');
 	}
 
-	// get all data
+	// get all product
 	public function index()
 	{
 		$data = $this->model->getData();
@@ -37,7 +35,7 @@ class PlantTypes extends ResourceController
 		return $this->respond($response, 200);
 	}
 
-	// get single data
+	// get single product
 	public function show($id = null)
 	{
 		$data = $this->model->getData($id);
@@ -55,40 +53,17 @@ class PlantTypes extends ResourceController
 		}
 	}
 
-	// create a data
+
 	public function create()
 	{
-		$code = rand(1, 100);
-		if ($code <= 10) {
-			$kodePlant = "PT0" . $code;
-		} else {
-			$kodePlant = "PT" . $code;
-		}
-		$name = $this->request->getPost('name');
-		$image = $this->request->getFile('image');
-		$image_name = $image->getName();
-		$harvest = $this->request->getPost('est_harvest_time');
-		$weight = $this->request->getPost('est_weight');
-		$data = [
-			'code'				=> $kodePlant,
-			'name'				=> $name,
-			'image'				=> $image_name,
-			'est_harvest_time'	=> $harvest,
-			'est_weight'		=> $weight
-		];
-		$this->validation->run($data, 'plant_type_create');
-		$errors = $this->validation->getErrors();
 
-		if ($errors) {
-			log_message('error', implode(",", array_values($errors)));
-			return $this->fail($errors);
-		}
+		$data  = $this->request->getPost();
 
-		if ($this->model->save($data)) {
-			$image->move(ROOTPATH . 'public/uploads/', $image_name);
+		if ($data) {
+			$this->model->save($data);
 			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
-			$message = 'Create Plant Type';
+			$message = 'Create Actuator';
 			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
@@ -99,36 +74,21 @@ class PlantTypes extends ResourceController
 			];
 			return $this->respondCreated($response, 201);
 		} else {
-			return $this->fail("Fail to save");
+			return $this->fail("Fail to save", 400);
 		}
 	}
 
-	// update data
+	// update product
 	public function update($id = null)
 	{
-		$json = $this->request->getJSON();
-		if ($json) {
-			$data = [
-				'name' => $json->name,
-				'est_harvest_time' => $json->est_harvest_time,
-				'est_weight' => $json->est_weight
-			];
-		} else {
-			$input = $this->request->getRawInput();
-			$data = [
-				'name' => $input['name'],
-				'est_harvest_time' => $input['est_harvest_time'],
-				'est_weight' => $input['est_weight']
-			];
-		}
-		// $tokenModel = new AuthTokensModel();
-		// $userid = $tokenModel->where('user_id', $user_id)->first();
+		$data = $this->request->getRawInput();
+
 		if ($data) {
 			$this->model->update($id, $data);
-			// $user = user()->username;
-			// $url = $this->request->uri->getSegment(2);
-			// $message = 'Update Plant Type';
-			// sys_log($user, $url, $message);
+			$user = user()->username;
+			$url = $this->request->uri->getSegment(2);
+			$message = 'Update Actuator';
+			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 201,
 				'messages' => [
@@ -137,13 +97,12 @@ class PlantTypes extends ResourceController
 				'data'			=> $data
 			];
 			return $this->respondUpdated($response, 201);
+		} else {
+			return $this->fail("Fail to save", 400);
 		}
-		// } else {
-		// 	return $this->fail("Fail to save");
-		// }
 	}
 
-	// delete data
+	// delete product
 	public function delete($id = null)
 	{
 		$data = $this->model->find($id);
@@ -151,7 +110,7 @@ class PlantTypes extends ResourceController
 			$this->model->delete($id);
 			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
-			$message = 'Delete Plant Type';
+			$message = 'Delete Actuator';
 			sys_log($user, $url, $message);
 			$response = [
 				'status'   => 200,

@@ -1,0 +1,46 @@
+Sprouting
+Code
+Bibit
+Tanggal
+Sisa
+Reject
+Status
+
+Seedling
+Code
+Sprouting
+Seedling (Jumlah yang di seedling)
+Tanggal
+Sisa
+Reject
+Status
+
+Grooming
+Code
+Seedling
+Tower & Level
+Tanggal
+Terproses
+Sisa
+Reject
+Status
+
+Transplanting
+Code
+Sprouting
+Tower & Level
+Tanggal
+Terproses
+Sisa
+Reject
+Status
+
+Transplanting
+Code
+Sprouting
+Tower & Level
+Tanggal
+Terproses
+Sisa
+Reject
+Status

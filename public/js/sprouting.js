@@ -9,6 +9,8 @@ $(document).ready(function () {
       { data: "tipe_tanaman", title: "Tipe Tanaman" },
       { data: "benih", title: "Benih" },
       { data: "tanggal", title: "Tanggal" },
+      { data: "sisa", title: "Sisa" },
+      { data: "reject", title: "Reject" },
       {
         data: "status",
         title: "Status",
@@ -50,6 +52,11 @@ $(document).ready(function () {
       },
     ],
     order: [[1, "asc"]],
+  });
+
+  $("#benih").change(function () {
+    var benih = $("#benih").val();
+    $("#sisa").attr("value", benih);
   });
 
   // Tambah data Sprouting
@@ -109,10 +116,9 @@ $(document).ready(function () {
           "selected"
         );
         $("#benih_edit").attr("value", data.data.benih);
-        $("#status_edit option[value='" + data.data.status + "']").attr(
-          "selected",
-          "selected"
-        );
+        $("#sisa_edit").attr("value", data.data.sisa);
+        $("#reject_edit").attr("value", data.data.reject);
+        $("#tanggal_edit").val(data.data.tanggal);
       },
     });
   });
@@ -194,7 +200,7 @@ $(document).ready(function () {
   });
 
   $("#tanaman").change(function () {
-    var tanaman = $("#tanaman").val();
+    var tanaman = $("#tanaman option:selected").text();
     var kodeSprout = $("#code").val() + "-" + tanaman;
     $("#code").attr("value", kodeSprout);
     $.ajax({

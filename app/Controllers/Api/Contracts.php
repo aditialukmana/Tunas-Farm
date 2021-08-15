@@ -73,8 +73,8 @@ class Contracts extends ResourceController
 			'contract_commitment'	=> $commitment,
 			'partnership_objective'	=> $partnership,
 		];
-		if ($data) {
-			$this->model->save($data);
+
+		if ($this->model->save($data)) {
 			$document->move(ROOTPATH . 'public/documents/', $document_name);
 			$user = user()->username;
 			$url = $this->request->uri->getSegment(2);
@@ -87,6 +87,7 @@ class Contracts extends ResourceController
 				],
 				'data'			=> $data
 			];
+			return $this->respondCreated($response, 201);
 		} else {
 			return $this->fail("Fail to save", 400);
 		}

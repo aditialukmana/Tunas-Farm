@@ -9,13 +9,13 @@
           <ul id="main-menu" class="metismenu">
             <li class="header">Main</li>
             <?php
-            $groups = ['admin', 'owner'];
-            if (in_groups($groups)) : ?>
-              <!-- <li class=""><a href="<?php echo base_url(''); ?>"><i class="icon-speedometer"></i><span>Dashboard</span></a></li> -->
+            if (in_groups("grower")) : ?>
+              <li class=""><a href="<?php echo base_url(''); ?>"><i class="icon-speedometer"></i><span>Dashboard</span></a></li>
             <?php endif; ?>
             <?php
 
             if (in_groups('admin')) : ?>
+              <li class=""><a href="<?php echo base_url(''); ?>"><i class="icon-speedometer"></i><span>Dashboard</span></a></li>
               <li class="">
                 <a href="#" class="has-arrow"><i class="fa fa-leaf"></i></i><span>Plant Management</span></a>
                 <ul>
@@ -52,10 +52,10 @@
               <li class="">
                 <a href="#" class="has-arrow"><i class="icon-screen-desktop"></i><span>Device Management</span></a>
                 <ul>
-                  <li id="menu-position" class=""><a href="<?php echo base_url('view/devices'); ?>">Devices</a></li>
+                  <li id="menu-position" class=""><a href="<?php echo base_url('view/growinstallations'); ?>">Grow Installations</a></li>
                 </ul>
                 <ul>
-                  <li id="menu-position" class=""><a href="<?php echo base_url('view/growinstallations'); ?>">Grow Installations</a></li>
+                  <li id="menu-position" class=""><a href="<?php echo base_url('view/devices'); ?>">Devices</a></li>
                 </ul>
               </li>
               <li class="">
@@ -68,7 +68,7 @@
                 </ul>
               </li>
               <li class="">
-                <a href="#" class="has-arrow"><i class="fa fa-clock-o"></i><span>Actuator Managements</span></a>
+                <!-- <a href="#" class="has-arrow"><i class="fa fa-clock-o"></i><span>Actuator Managements</span></a>
                 <ul>
                   <a href="<?= base_url('view/actuatorgrowinstallations') ?>"><span>Actuator Grow Installations</span></a>
                 </ul>
@@ -78,10 +78,10 @@
               </li>
               <li class="">
                 <a href="<?= base_url('view/privilegesettings') ?>"><i class="fa fa-cog"></i><span>Privilege Settings</span></a>
-              </li>
-            <?php endif; ?>
-            <?php
-            if (in_groups('grower')) : ?>
+              </li> -->
+              <?php endif; ?>
+              <?php
+              if (in_groups('grower')) : ?>
               <li class="">
                 <a href="<?= base_url('view/sprouting') ?>"><i class="fa fa-leaf"></i><span>Sprouting</span></a>
                 <a href="<?= base_url('view/seedling') ?>"><i class="fa fa-leaf"></i><span>Seedling</span></a>

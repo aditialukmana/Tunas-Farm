@@ -57,9 +57,6 @@
                         </button>
                     </form>
                     <hr>
-                    <?php if ($config->allowRegistration) : ?>
-                        <p><a href="<?= base_url('register') ?>"><?= lang('Auth.needAnAccount') ?></a></p>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -28,10 +28,12 @@
             <table class="table table-hover table-custom spacing5" id="tableSprouting" data-url="<?php echo base_url('api/sprouting'); ?>">
               <thead>
                 <tr>
-                  <th style="width: 17%">Code</th>
-                  <th style="width: 18%;">Tipe Tanaman</th>
+                  <th style="width: 15%">Code</th>
+                  <th style="width: 15%;">Tipe Tanaman</th>
                   <th style="width: 5%;">Benih</th>
-                  <th style="width: 15%;">Tanggal</th>
+                  <th style="width: 10%;">Tanggal</th>
+                  <th>Sisa</th>
+                  <th>Reject</th>
                   <th style="width: 10%;">Status</th>
                   <th style="width: 15%;">Action</th>
                 </tr>
@@ -79,9 +81,10 @@
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Tanggal</label>
-            <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+            <input type="date" id="tanggal" name="tanggal" class="form-control">
           </div>
           <div class="form-group mb-3">
+            <input type="text" name="sisa" id="sisa" hidden>
             <label for="code" class="control-label">Status</label>
             <select name="status" id="status" class="form-control">
               <option value="active">Active</option>
@@ -123,12 +126,17 @@
               <input type="number" id="benih_edit" name="benih" class="form-control" autocomplete="off">
             </div>
             <div class="form-group mb-3">
-              <label for="code" class="control-label">Status</label>
-              <select name="status" id="status_edit" class="form-control">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
+              <label for="releaseName" class="control-label">Sisa</label>
+              <input type="text" id="sisa_edit" name="sisa" class="form-control" autocomplete="off">
             </div>
+            <div class="form-group mb-3">
+              <label for="releaseName" class="control-label">Reject</label>
+              <input type="text" id="reject_edit" name="reject" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group mb-3">
+            <label for="code" class="control-label">Tanggal</label>
+            <input type="date" id="tanggal_edit" name="tanggal" class="form-control">
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>

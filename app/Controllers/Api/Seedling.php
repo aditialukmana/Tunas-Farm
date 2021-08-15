@@ -24,7 +24,7 @@ class Seedling extends ResourceController
 	// get all product
 	public function index()
 	{
-		$data = $this->model->getData();
+		$data = $this->model->joinData();
 		$response = [
 			'status'   => 200,
 			'messages' => [

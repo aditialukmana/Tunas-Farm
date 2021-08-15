@@ -91,12 +91,9 @@ class AuthController extends Controller
 			return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
 		}
 
-		$redirectURL =  '/view/planttypes';
+		$redirectURL =  '/';
 		unset($_SESSION['redirect_url']);
-		if(user()->username == "admin") {
-			return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
-		} else 
-		return redirect()->to('/view/sprouting')->withCookies()->with('message', lang('Auth.loginSuccess'));
+		return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
 	}
 
 	/**

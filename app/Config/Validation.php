@@ -221,11 +221,4 @@ class Validation
 		'status'			=> 'required',
 		'id_tanaman'		=> 'required'
 	];
-
-	public $harvesting_update = [
-		'transplanting'		=> 'required',
-		'terproses'			=> 'required',
-		'sisa'				=> 'required',
-		'status'			=> 'required',
-	];
 }

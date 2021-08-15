@@ -49,6 +49,8 @@
   </div>
 </div>
 
+<input type="text" id="id_sprout" hidden>
+<input type="text" id="jumlah_sprout" hidden>
 <div class="modal fade" id="modal_create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -80,8 +82,9 @@
             <input type="number" id="seedling" name="seedling" class="form-control" autocomplete="off" placeholder="Jumlah yang akan di seedling">
           </div>
           <div class="form-group mb-3">
+            <input type="text" name="sisa" id="sisa" hidden>
             <label for="code" class="control-label">Tanggal</label>
-            <input type="text" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+            <input type="date" id="tanggal" name="tanggal" class="form-control">
           </div>
           <div class="form-group mb-3">
             <label for="code" class="control-label">Status</label>
@@ -131,11 +134,8 @@
             <input type="text" id="reject_edit" name="reject" class="form-control" autocomplete="off">
           </div>
           <div class="form-group mb-3">
-            <label for="code" class="control-label">Status</label>
-            <select name="status" id="status_edit" class="form-control">
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            <label for="code" class="control-label">Tanggal</label>
+            <input type="date" id="tanggal_edit" name="tanggal" class="form-control">
           </div>
         </div>
         <div class="modal-footer">

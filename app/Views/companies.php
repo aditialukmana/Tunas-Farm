@@ -20,7 +20,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="text-left" style="margin-bottom:10px;margin-top:20px">
-          <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#modal_create_company">Create
+          <button type="button" class="btn btn-round btn-success" data-toggle="modal" data-target="#modal_create">Create
             New Company</button>
         </div>
         <div class="body">

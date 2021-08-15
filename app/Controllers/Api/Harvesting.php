@@ -81,13 +81,6 @@ class Harvesting extends ResourceController
 	public function update($id = null)
 	{
 		$data = $this->request->getRawInput();
-		$this->validation->run($data, 'harvesting_update');
-		$errors = $this->validation->getErrors();
-
-		if ($errors) {
-			log_message('error', implode(",", array_values($errors)));
-			return $this->fail($errors);
-		}
 
 		if ($this->model->update($id, $data)) {
 			$user = user()->username;

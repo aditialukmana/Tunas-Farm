@@ -11,7 +11,7 @@ class SproutingModel extends Model
 
     protected $useAutoIncrement = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['code', 'id', 'tipe_tanaman', 'benih', 'tanggal', 'status', 'id_tanaman', 'deleted_at'];
+    protected $allowedFields = ['code', 'id', 'tipe_tanaman', 'benih', 'tanggal', 'sisa', 'reject', 'status', 'id_tanaman', 'deleted_at'];
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';

@@ -112,6 +112,11 @@
             <label for="releaseName" class="control-label">Fullname</label>
             <input type="text" id="fullname_edit" name="fullname" class="form-control" autocomplete="off">
           </div>
+          <div class="form-group mb-3">
+            <label for="releaseName" class="control-label">Customer</label>
+            <select name="customer" id="customer_edit" class="form-control">
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-round btn-default" data-dismiss="modal">Close</button>

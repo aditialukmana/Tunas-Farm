@@ -52,6 +52,12 @@ $(document).ready(function () {
     ],
     order: [[1, "asc"]],
   });
+
+  $("#terproses").change(function () {
+    var terproses = $("#terproses").val();
+    $("#sisa").attr("value", terproses);
+  });
+
   // Tambah data Transplanting
   $("#add_trans").click(function () {
     var sisa_groom = $("#jumlah_groom").val() - $("#terproses").val();
@@ -173,10 +179,7 @@ $(document).ready(function () {
         ).attr("selected", "selected");
         $("#terproses_edit").attr("value", data.data.terproses);
         $("#sisa_edit").attr("value", data.data.sisa);
-        $("#status_edit option[value='" + data.data.status + "']").attr(
-          "selected",
-          "selected"
-        );
+        $("#tanggal_edit").val(data.data.tanggal);
       },
     });
     $.ajax({
@@ -275,6 +278,8 @@ $(document).ready(function () {
             $(
               "#tower_level option[value='" + data.data[i].grtwrlvl + "']"
             ).attr("selected", "selected");
+            $("#terproses").attr("value", data.data[i].grsisa);
+            $("#sisa").attr("value", data.data[i].grsisa);
           }
         }
         var id_tanaman = $("#id_tanaman").val();

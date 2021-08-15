@@ -57,6 +57,8 @@ $(document).ready(function () {
     });
   });
 
+
+
   $(document).on("click", ".edit-plant", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
@@ -94,6 +96,13 @@ $(document).ready(function () {
       },
     });
   });
+
+  // var anak = {
+  //   anak1: "Seorang anak bernama rudy umurnya 5 tahun, suka bermain sepak bola",
+  //   anak2: "Seorang anak bernama lisa umurnya 3 tahun, suka bermain boneka",
+  // };
+
+  // console.log(anak);
 
   $(document).on("click", ".delete-plant", function (e) {
     e.preventDefault();

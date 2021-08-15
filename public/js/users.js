@@ -92,6 +92,9 @@ $(document).ready(function () {
         $("#email_edit").val(data.data.email);
         $("#username_edit").val(data.data.username);
         $("#fullname_edit").val(data.data.fullname);
+        $(
+          "#customer_edit option[value='" + data.data.customer + "']"
+        ).attr("selected", "selected");
       },
     });
   });
@@ -152,6 +155,13 @@ $(document).ready(function () {
     success: function (data) {
       for (var i = 0; i < data.data.length; i++) {
         $("#customer").append(
+          "<option value='" +
+            data.data[i].id +
+            "'>" +
+            data.data[i].name +
+            "</option>"
+        );
+        $("#customer_edit").append(
           "<option value='" +
             data.data[i].id +
             "'>" +
